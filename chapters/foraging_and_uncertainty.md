@@ -105,3 +105,60 @@ adapted to sense various aspects of uncertainty regarding their actions within
 the environment. However, such a pivotal importance of uncertainty in
 food-seeking behavior could be contested when considering perceptual abilities
 as the primary means of informing foraging.
+
+Perceptual abilities are always limited in some regard, and such limitation can
+be regarded as the perceptual range of a given animal
+[@C377F7EP#Fletcher_Etal_2013]. If an animal must know what is beyond such
+perceptual range displacement is needed. However, to inform such displacement
+memory, perceptual information integration, or some other strategy should come
+into play. In many classical models lies the assumption than animals can
+somehow integrate information about resource quality and distribution into a
+environment mean [@ESYGCSLH#Charnov_1976]. However, perceptual omniscience is
+not the case, and integration of environmental information is dependent on
+times, so including non-local information (outside perceptual range) such as
+resources gradients prove useful for the foraging animal
+[@LDCMV4VS#Fagan_Etal_2017].
+
+Even when local and non-local information can improve foraging sucess, there is
+still an issue on how perceptual information behaves regarding movement and
+spatial distance. The speed-perception tradeoff describes how perceptual
+abilities are degraded as speed is increased
+[@KU6TMHRT#Campos_Bartumeus_Méndez_2013], and as rapid approaching speeds are
+required to capture prey or obtain food-resources while relying on local
+perceptual inforamtion [@LDCMV4VS#Fagan_Etal_2017] this tradeoff present an
+issue to food-seeking behavior. Moreover, the intensive-extensive tradeoff
+points how finding food-resource nearby impairs finding resources far-away
+[@VYE5NZFU#Raposo_Etal_2011; @9XCDNBAM#Bartumeus_Etal_2016 ]. Both tradeoffs
+imply that in order to properly obtain knowledge about the environment, and
+actually achieve success in obtaining food lead to perceptual uncertainty and
+require a fine balance between exploration and exploitation.
+
+In order to deal with such tradeoffs animals stablish two distinct behavioral
+modes: (a) local search, and (b) relocation. Local search is predominantly
+informed by perceptual information, while the relocation behavior show signs of
+a stochastic process with Lévy-like distributions [@W7DBK8JN#Bazazi_Etal_2012].
+While there has been discussion of brownian-like random movements guiding local
+search, this is most likely a emergent property caused by frequent food
+encounters [@HJIF9SNA#DeJager_Etal_2014], so this shifts from a random
+relocation process to a perceptually guided local search, are in part result of
+an increased frequency of food encounters. Thus, the overall food-seeking
+strategy derives from a combination of random and perceptually informed
+movements [@KCAKLD2E#Balogh_Etal_2020].
+
+Given the limitation in perceptual abilities uncertainty seems to be
+innescapable. Even when a experienced animal can integrate optimal foraging
+paths in non-stationary environments, random searched with distinct cycles of
+exploration/exploitation phases persist [@GNGBMVLA#Kembro_Etal_2019].
+Furthermore, introducing stochasticity in food-seeking behavior improves
+success as makes strategies more resilient to cognitive errors derived from
+perception [@YTHQBTQH#Campos_Etal_2020]. The persistance of strategies that
+permits the balance between exploitation, exploration and relocation
+[@KU6TMHRT#Campos_Bartumeus_Méndez_2013], even when they are not technically
+needed [@77AMCAE4#Ryali_Reddy_Yu_2016] shows how relevant is uncertainty in the
+development of food-seeking behavior. In this section we presented how
+stochastic properties of the environment lead to behavioral adaptations to deal
+with the resultant uncertainty, by favoring strategies that favor reduction of
+uncertainty [@QAN6C9AM#Peters_Mcewen_Friston_2017]. In the next section we will
+examine models that consider the case of foraging in uncertain
+environments, which inform about the underlying processes in food-seeking
+behavior.
