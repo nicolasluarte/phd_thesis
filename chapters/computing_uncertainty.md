@@ -18,4 +18,21 @@ animals performs multiple food-seekign bouts and non of them are succesful $H =
 successful food-seeking bout is 0.5, then entropy is maximized $H = 1$. Neural
 representation of entropy has been found in the middle cingulate cortex (MCC)
 for the particular implementation of encoding outcome entropy
-[@55XGJCH7#Goñi_Etal_2011; @DRJBKPPI#Gloy_Herrmann_Fehr_2020]
+[@55XGJCH7#Goñi_Etal_2011; @DRJBKPPI#Gloy_Herrmann_Fehr_2020] so this
+computation seems to be biologically plausible. However, entropy is not
+available as sensory input it must derive from actions and outcomes, which are
+dependent on environment state. Previously, through Thompson sampling we
+provided a way in that entropy could be enconded as variance in the posterior
+distribution, nevertheless, a more direct way to compute entropy is possible
+through the prediction error.
+
+Describe prediction error.
+Learning rate as point estimate of uncertainty.
+
+Dynamically adjust learning rate in face of uncertainty.
+
+the uncertainty bonus.
+
+uncertainty increases food-seeking behavior.
+
+dopamin, ach, NE. Hint orexin.
