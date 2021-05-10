@@ -72,13 +72,34 @@ that is, displaying a peak of activity at probability 0.5
 Shannon entropy, and adaptation predicted by prediction error minimization
 [@7PXFUSRW#Schiffer_Etal_2012], similar activity is also present on the striatum
 [@6FBLSRK9#DenOuden_Etal_2010], substantia nigra [@6IGYU34R#Zaghloul_Etal_2009],
-and ventral tegmental area [@XHH632AS#Iordanova_Etal_2021]. Evidence supports
-that most dopaminergic pathways have a reward prediction error related activity.
-Nevertheless, acetylcholine and norepinphrine... (expected and unexpeected
-uncertainty)
+and ventral tegmental area [@XHH632AS#Iordanova_Etal_2021]. Moreover, DA
+activity fits the classical reinforcement models as ventral tegmental DA support
+cue-reward learning, the modifications of previous cue-reward associations
+[@LSWYXCBD#Steinberg_Etal_2013; @8FIHXB6G#Chakroun_Etal_2020], and capable of
+dealing with exploration/exploitation via tonic and phasic signaling,
+respectively [@TN6NBEH8#Beeler_Etal_2010].
 
-the uncertainty bonus.
+There is substantially evidence that DA neurons, specifically in the VTA serve
+the functional role of computing reward prediction errors
+[@NLDHLRVN#WatabeUchida_Eshel_Uchida_2017 ], by weighting inputs from multiple
+brain areas, most remarkably the lateral hypothalamus, dorsal and ventral
+striatum, ventral pallidum, and subthalamic nucleus [@SFZIJKFP#Tian_Etal_2016].
+However, acetylcholine (ACh) and norepinephrine (NA) associated with expected
+and unexpected uncertainty, respectively [@4BJ2B6KB#Yu_Dayan_2005] which are
+mainly produced in the basal forebrain [@D8EGNYCV#Sturgill_Etal_2020] and locus
+coeruleus (LC) [@TA5KB3TF#Sales_Etal_2019; @LEWESIS6#AstonJones_Cohen_2005]. ACh
+antagonism has been shown to increase the response sensitivity to expected
+uncertainty within a task [@9X7Z6PMX#Marshall_Etal_2016], providing evidence
+that ACh represents expected uncertainty. On the other hand, NA for new
+contingencies. On the other hand, LC tonic activity represents unexpected
+uncertainty [@9Z525EYW#PayzanLenestour_Etal_2013;
+@LEWESIS6#AstonJones_Cohen_2005].
 
-uncertainty increases food-seeking behavior.
-
-dopamin, ach, NE. Hint orexin.
+In this section we presented simple computational models that consider
+uncertainty by using information provided by the reward prediction error, which
+is a extremely simple computation with that is likely to be implemented by DA
+activity in the VTA, with additional modulation by ACh and NA possibly
+controling the sensitivity of DA to expectected and unexpected uncertainty. In
+the following two sections we will show empirical evidence on how food-access
+uncertainty increases food-seeking behavior, and propose orexin as a potential
+mediator of uncertainty-driven foraging.
