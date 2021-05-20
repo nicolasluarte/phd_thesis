@@ -40,7 +40,7 @@ data2 <- data2 %>%
 
 data1 <- bind_rows(data1)
 data2 <- bind_rows(data2)
-rawData <- bind_rows(data1, data2)
+rawData <- bind_rows(data1, data2) %>% drop_na()
 
 
 # read log data
@@ -53,7 +53,7 @@ log %>%
 	       hora_termino = lubridate::hms(hora_termino),
 	       error.tecnico = replace_na(error.tecnico, 0),
 	       arduinoNumber = ARDUINO
-	       ) %>% filter(date <= "2021-05-13") -> log
+	       ) %>% filter(date >= "2021-05-13") -> log
 
 rawData %>% filter(date %in% log$date) -> data
 
@@ -93,7 +93,7 @@ data %>%
 	       msFromReward = getmsFromEvent(isReward, ms),
 	       msFromNonReward = getmsFromEvent(!isReward, ms),
 	       msFromEvent = getmsFromEvent(isEvent, ms),
-	       bins = binsMs(ms, 600000)$msBins,
+	       bins = cut(ms, c(seq(0, 3600000, 600000)), include.lowest = TRUE),
 	       expGroup = if_else(raton %in% c(217, 219, 223, 224), 1, 0)) -> data
 
 # basic plots
@@ -104,138 +104,179 @@ data %>%
 	geom_vline(xintercept = as.numeric(as.Date("2021-05-12"))) +
 	facet_wrap(~raton)
 
-# experimental plots
-# arreglar los colores
+# cumlicks per day
 data %>%
 	filter(date >= "2021-05-13") %>%
 	ggplot(aes(ms, licksCum, color = as.factor(randomSpout))) +
 	geom_line(aes(linetype = as.factor(spoutNumber))) +
 	labs(color = "Spout random reward", linetype = "Spout number") +
-	facet_grid(raton ~ date ~ expGroup) +
+	facet_grid(raton ~ date) +
 	xlab("Milliseconds from start") +
 	ylab("Cummulative Licks") +
 	ggtitle("0 = control, 1 = experimental")
 
-# choice by bins
-p1 <- data %>%
-	filter(raton %in% c(217, 219, 223, 224)) %>%
-	group_by(raton, date, bins) %>%
-	mutate(choice = mean(randomSpout)) %>%
-	filter(date >= "2021-05-13") %>%
-	ggplot(aes(bins, choice)) +
-	geom_point() +
-	geom_line() +
-	geom_smooth() +
-	facet_wrap(~raton)
-p2 <- data %>%
-	filter(!(raton %in% c(217, 219, 223, 224))) %>%
-	group_by(raton, date, bins) %>%
-	mutate(choice = mean(choiceSpout)) %>%
-	filter(date >= "2021-05-13") %>%
-	ggplot(aes(bins, choice)) +
-	geom_point() +
-	geom_line() +
-	geom_smooth() +
-	facet_wrap(~raton)
-grid.arrange(p1, p2)
-
+# bin per day
 data %>%
-	filter(date >= "2021-05-12") %>%
-	ggplot(aes(as.factor(expGroup), maxLicks)) +
+	filter(date >= "2021-05-13") %>%
+	group_by(date, raton, bins, spoutNumber, randomSpout) %>%
+	summarise(meanLicks = mean(licksCum),
+		  sdLicks = sd(licksCum)) %>%
+	ggplot(aes(as.numeric(bins), meanLicks, color = as.factor(randomSpout))) +
 	geom_point() +
-	facet_wrap(~date)
+	geom_line(aes(linetype = as.factor(spoutNumber))) +
+	facet_grid(raton ~ date)
 
-# Events per group
-pointSumm <- data %>%
+# bins mean
+data %>%
+	filter(date >= "2021-05-13") %>%
+	group_by(raton, bins, randomSpout) %>%
+	summarise(meanLicks = mean(licksCum),
+		  sdLicks = sd(licksCum)) %>%
+	ggplot(aes(as.numeric(bins), meanLicks, color = as.factor(randomSpout))) +
+	geom_point() +
+	geom_line() +
+	geom_errorbar(aes(ymin = meanLicks - sdLicks, ymax = meanLicks + sdLicks)) +
+	facet_grid(~raton)
+
+# bins choice
+data %>%
+	filter(date >= "2021-05-13") %>%
+	filter(raton %in% c(217, 219, 223, 224)) %>%
+	group_by(raton, bins) %>%
+	summarise(meanChoice = mean(randomSpout),
+		  sdChoice = sd(randomSpout)) %>%
+	ggplot(aes(as.numeric(bins), meanChoice)) +
+	geom_point() +
+	geom_line() +
+	geom_errorbar(aes(ymin = meanChoice - sdChoice, ymax = meanChoice + sdChoice)) +
+	facet_grid(~raton)
+
+# bins choice
+data %>%
+	filter(date >= "2021-05-13") %>%
+	filter(raton %in% c(217, 219, 223, 224)) %>%
+	group_by(raton, bins, date) %>%
+	summarise(meanChoice = mean(randomSpout),
+		  sdChoice = sd(randomSpout)) %>%
+	ggplot(aes(as.numeric(bins), meanChoice)) +
+	geom_point() +
+	geom_line() +
+	geom_errorbar(aes(ymin = meanChoice - sdChoice, ymax = meanChoice + sdChoice)) +
+	facet_grid(raton ~ date)
+
+# bins choice
+c1 <- data %>%
+	filter(date >= "2021-05-13") %>%
+	filter(raton %in% c(217, 219, 223, 224)) %>%
+	group_by(raton) %>%
+	ggplot(aes(ms, randomSpout)) +
+	geom_point() +
+	geom_smooth() +
+	facet_grid(~raton)
+# bins choice
+c2 <- data %>%
+	filter(date >= "2021-05-13") %>%
+	filter(!(raton %in% c(217, 219, 223, 224))) %>%
+	group_by(raton) %>%
+	ggplot(aes(ms, choiceSpout)) +
+	geom_point() +
+	geom_smooth() +
+	facet_grid(~raton)
+grid.arrange(c1, c2)
+
+# events from uncertainty group
+avg <-data %>%
 	filter(date >= "2021-05-12") %>%
-	group_by(date, expGroup, raton) %>%
-	summarise(meanLicks = unique(maxEvents))
-meanSumm <- data %>%
+	filter(raton %in% c(217, 219, 223, 224)) %>%
+	group_by(randomSpout) %>%
+	summarise(meanEvents = mean(maxEvents), sdEvents = sd(maxEvents))
+point <- data %>%
+	filter(date >= "2021-05-12") %>%
+	filter(raton %in% c(217, 219, 223, 224)) %>%
+	group_by(randomSpout, raton) %>%
+	summarise(meanEvents = mean(maxEvents))
+point %>%
+	ggplot(aes(as.factor(randomSpout), meanEvents)) +
+	geom_point() +
+	geom_col(data = avg, alpha = 0.3) +
+	geom_errorbar(data = avg, aes(ymin = meanEvents - sdEvents, ymax = meanEvents + sdEvents))
+
+# licks for uncertainty group
+avg <-data %>%
+	filter(date >= "2021-05-12") %>%
+	filter(raton %in% c(217, 219, 223, 224)) %>%
+	group_by(randomSpout) %>%
+	summarise(meanLicks = mean(maxLicks), sdLicks = sd(maxLicks))
+point <- data %>%
+	filter(date >= "2021-05-12") %>%
+	filter(raton %in% c(217, 219, 223, 224)) %>%
+	group_by(randomSpout, raton) %>%
+	summarise(meanLicks = mean(maxLicks))
+point %>%
+	ggplot(aes(as.factor(randomSpout), meanLicks)) +
+	geom_point() +
+	geom_col(data = avg, alpha = 0.3) +
+	geom_errorbar(data = avg, aes(ymin = meanLicks - sdLicks, ymax = meanLicks + sdLicks))
+
+# rewards for uncertainty group
+avg <-data %>%
+	filter(date >= "2021-05-12") %>%
+	filter(raton %in% c(217, 219, 223, 224)) %>%
+	group_by(randomSpout) %>%
+	summarise(meanRewards = mean(maxRewards), sdRewards = sd(maxRewards))
+point <- data %>%
+	filter(date >= "2021-05-12") %>%
+	filter(raton %in% c(217, 219, 223, 224)) %>%
+	group_by(randomSpout, raton) %>%
+	summarise(meanRewards = mean(maxRewards))
+point %>%
+	ggplot(aes(as.factor(randomSpout), meanRewards)) +
+	geom_point() +
+	geom_col(data = avg, alpha = 0.3) +
+	geom_errorbar(data = avg, aes(ymin = meanRewards - sdRewards, ymax = meanRewards + sdRewards))
+
+# group versus rewards
+avg <-data %>%
 	filter(date >= "2021-05-12") %>%
 	group_by(expGroup) %>%
-	summarise(meanLicks = mean(maxEvents),
-	sdLicks = sd(maxEvents))
-pointSumm %>%
-	ggplot(aes(as.factor(expGroup), meanLicks)) +
-	geom_point() +
-	geom_col(data = meanSumm, alpha = 0.3) +
-	geom_errorbar(data = meanSumm, aes(ymin = meanLicks - sdLicks, ymax = meanLicks + sdLicks)) +
-	scale_x_discrete(labels = c("1/1", "0.5/1")) +
-	xlab("Experimental groups") +
-	ylab("Mean events")
-
-# Rewards per group
-pointSumm <- data %>%
+	summarise(meanRewards = mean(maxRewards), sdEvents = sd(maxRewards))
+point <- data %>%
 	filter(date >= "2021-05-12") %>%
-	group_by(date, expGroup, raton) %>%
-	summarise(meanLicks = unique(maxRewards))
-meanSumm <- data %>%
+		group_by(expGroup, raton) %>%
+	summarise(meanRewards = mean(maxRewards))
+point %>%
+	ggplot(aes(as.factor(expGroup), meanRewards)) +
+	geom_point() +
+	geom_col(data = avg, alpha = 0.3) +
+	geom_errorbar(data = avg, aes(ymin = meanRewards - sdEvents, ymax = meanRewards + sdEvents))
+
+# group versus licks
+avg <-data %>%
 	filter(date >= "2021-05-12") %>%
 	group_by(expGroup) %>%
-	summarise(meanLicks = mean(maxRewards),
-	sdLicks = sd(maxRewards))
-pointSumm %>%
+	summarise(meanLicks = mean(maxLicks), sdLicks = sd(maxLicks))
+point <- data %>%
+	filter(date >= "2021-05-12") %>%
+		group_by(expGroup, raton) %>%
+	summarise(meanLicks = mean(maxLicks))
+point %>%
 	ggplot(aes(as.factor(expGroup), meanLicks)) +
 	geom_point() +
-	geom_col(data = meanSumm, alpha = 0.3) +
-	geom_errorbar(data = meanSumm, aes(ymin = meanLicks - sdLicks, ymax = meanLicks + sdLicks)) +
-	scale_x_discrete(labels = c("1/1", "0.5/1")) +
-	xlab("Experimental groups") +
-	ylab("Mean rewards")
+	geom_col(data = avg, alpha = 0.3) +
+	geom_errorbar(data = avg, aes(ymin = meanLicks - sdLicks, ymax = meanLicks + sdLicks))
 
-# Licks per group
-pointSumm <- data %>%
-	filter(date >= "2021-05-12") %>%
-	group_by(date, expGroup, raton) %>%
-	summarise(meanLicks = unique(maxLicks))
-meanSumm <- data %>%
+# group versus events
+avg <-data %>%
 	filter(date >= "2021-05-12") %>%
 	group_by(expGroup) %>%
-	summarise(meanLicks = mean(maxLicks),
-	sdLicks = sd(maxLicks))
-pointSumm %>%
-	ggplot(aes(as.factor(expGroup), meanLicks)) +
+	summarise(meanEvents = mean(maxEvents), sdEvents = sd(maxEvents))
+point <- data %>%
+	filter(date >= "2021-05-12") %>%
+		group_by(expGroup, raton) %>%
+	summarise(meanEvents = mean(maxEvents))
+point %>%
+	ggplot(aes(as.factor(expGroup), meanEvents)) +
 	geom_point() +
-	geom_col(data = meanSumm, alpha = 0.3) +
-	geom_errorbar(data = meanSumm, aes(ymin = meanLicks - sdLicks, ymax = meanLicks + sdLicks)) +
-	scale_x_discrete(labels = c("1/1", "0.5/1")) +
-	xlab("Experimental groups") +
-	ylab("Mean number of licks")
-
-
-## important
-trials <- data %>%
-	mutate(antiSpout = !randomSpout) %>%
-	group_by(raton, date) %>%
-	mutate(cEvent = cumsum(isEvent),
-	       cRandom = cumsum(!randomSpout)) %>%
-	ungroup() %>%
-	group_by(cRandom, raton, date) %>%
-	mutate(interTrial = min(ms)) %>%
-	ungroup() %>%
-	group_by(raton, date) %>%
-	mutate(randomToFixed = (interTrial - cummax(interTrial * randomSpout)) * cummax(randomSpout),
-	randomToFixed = na_if(randomToFixed, 0))
-
-## important
-trials1 <- data %>%
-	mutate(antiSpout = !randomSpout) %>%
-	group_by(raton, date) %>%
-	mutate(cEvent = cumsum(isEvent),
-	       cRandom = cumsum(!antiSpout)) %>%
-	ungroup() %>%
-	group_by(cRandom, raton, date) %>%
-	mutate(interTrial = min(ms)) %>%
-	ungroup() %>%
-	group_by(raton, date) %>%
-	mutate(fixedToRandom = (interTrial - cummax(interTrial * antiSpout)) * cummax(antiSpout),
-	fixedToRandom = na_if(fixedToRandom, 0))
-
-trials %>%
-	ggplot(aes(randomToFixed)) +
-	geom_density(aes(color = "random to fixed", y = ..scaled..)) +
-	geom_density(data = trials1, aes(fixedToRandom, color = "fixed to random", y = ..scaled..))
-
-
-
+	geom_col(data = avg, alpha = 0.3) +
+	geom_errorbar(data = avg, aes(ymin = meanEvents - sdEvents, ymax = meanEvents + sdEvents))
 
