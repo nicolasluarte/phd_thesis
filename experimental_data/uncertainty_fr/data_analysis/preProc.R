@@ -53,9 +53,9 @@ log %>%
 	       hora_termino = lubridate::hms(hora_termino),
 	       error.tecnico = replace_na(error.tecnico, 0),
 	       arduinoNumber = ARDUINO
-	       ) %>% filter(date >= "2021-05-13") -> log
+	       ) %>% filter(date >= "2021-04-01") -> log
 
-rawData %>% filter(date %in% log$date) -> data
+rawData %>% filter(date %in% log$date) -> data 
 
 data %>%
 	left_join(log %>%
@@ -96,6 +96,16 @@ data %>%
 	       bins = cut(ms, c(seq(0, 3600000, 600000)), include.lowest = TRUE),
 	       expGroup = if_else(raton %in% c(217, 219, 223, 224), 1, 0)) -> data
 
+
+# cumlicks per day
+data %>%
+	ggplot(aes(ms, licksCum, color = as.factor(randomSpout))) +
+	geom_line(aes(linetype = as.factor(spoutNumber))) +
+	labs(color = "Spout random reward", linetype = "Spout number") +
+	facet_grid(raton ~ date) +
+	xlab("Milliseconds from start") +
+	ylab("Cummulative Licks")
+
 # basic plots
 data %>%
 	ggplot(aes(date, maxLicks, color = as.factor(expGroup))) +
@@ -103,17 +113,6 @@ data %>%
 	geom_line() +
 	geom_vline(xintercept = as.numeric(as.Date("2021-05-12"))) +
 	facet_wrap(~raton)
-
-# cumlicks per day
-data %>%
-	filter(date >= "2021-05-13") %>%
-	ggplot(aes(ms, licksCum, color = as.factor(randomSpout))) +
-	geom_line(aes(linetype = as.factor(spoutNumber))) +
-	labs(color = "Spout random reward", linetype = "Spout number") +
-	facet_grid(raton ~ date) +
-	xlab("Milliseconds from start") +
-	ylab("Cummulative Licks") +
-	ggtitle("0 = control, 1 = experimental")
 
 # bin per day
 data %>%
@@ -199,7 +198,9 @@ point %>%
 	ggplot(aes(as.factor(randomSpout), meanEvents)) +
 	geom_point() +
 	geom_col(data = avg, alpha = 0.3) +
+	geom_label(aes(label  = raton)) +
 	geom_errorbar(data = avg, aes(ymin = meanEvents - sdEvents, ymax = meanEvents + sdEvents))
+
 
 # licks for uncertainty group
 avg <-data %>%
@@ -250,28 +251,87 @@ point %>%
 	geom_col(data = avg, alpha = 0.3) +
 	geom_errorbar(data = avg, aes(ymin = meanRewards - sdEvents, ymax = meanRewards + sdEvents))
 
+a <-data %>%
+	group_by(raton, expGroup) %>%
+	nest() %>%
+	mutate(licks = map(data, function(x){x %>%
+			   group_by(date, spoutNumber) %>%
+			   summarise(licks = max(licksCum)) %>%
+			   summarise(totLicks  = sum(licks))
+			 }))
+experimental <- a %>%
+	filter(expGroup == 1) %>%
+	select(licks) %>%
+	unnest(cols = c(licks)) %>%
+	ungroup() %>%
+	select(totLicks)
+control <- a %>%
+	filter(expGroup == 0) %>%
+	select(licks) %>%
+	unnest(cols = c(licks)) %>%
+	ungroup() %>%
+	select(totLicks)
+
+b <- data %>%
+	group_by(expGroup) %>%
+	filter(date > "2021-05-05", date < "2021-05-12") %>%
+	nest() %>%
+	mutate(licks = map(data, function(x){x %>%
+			   group_by(date, spoutNumber) %>%
+			   summarise(licks = max(rewardsCum))
+			 }))
+
+experimental <- b %>%
+	filter(expGroup == 1) %>%
+	select(licks) %>%
+	unnest(cols = c(licks)) %>%
+	ungroup() %>%
+	select(totLicks)
+control <- b %>%
+	filter(expGroup == 0) %>%
+	select(licks) %>%
+	unnest(cols = c(licks)) %>%
+	ungroup() %>%
+	select(totLicks)
+b %>% unnest(cols = c(licks)) %>%
+	ggplot(aes(date, totLicks, color = as.factor(expGroup))) +
+	geom_line() +
+	geom_errorbar(aes(ymin = totLicks - sem, ymax = totLicks + sem)) +
+	geom_vline(xintercept = as.numeric(as.Date("2021-05-12")))
+
+
 # group versus licks
 avg <-data %>%
-	filter(date >= "2021-05-12") %>%
+	filter(date >= "2021-06-13",
+	       ms > 0, ms < 300000) %>%
 	group_by(expGroup) %>%
-	summarise(meanLicks = mean(maxLicks), sdLicks = sd(maxLicks))
+	summarise(meanLicks = mean(maxLicks), sdLicks = sd(maxLicks)/sqrt(4))
 point <- data %>%
-	filter(date >= "2021-05-12") %>%
+	filter(date >= "2021-05-13",
+	       ms > 0, ms < 300000) %>%
 		group_by(expGroup, raton) %>%
-	summarise(meanLicks = mean(maxLicks))
+	summarise(meanLicks = unique(maxLicks))
 point %>%
 	ggplot(aes(as.factor(expGroup), meanLicks)) +
 	geom_point() +
 	geom_col(data = avg, alpha = 0.3) +
-	geom_errorbar(data = avg, aes(ymin = meanLicks - sdLicks, ymax = meanLicks + sdLicks))
+	geom_errorbar(data = avg,
+		      aes(ymin = meanLicks - sdLicks, ymax = meanLicks + sdLicks),
+		      width = 0.2) +
+	theme_bw() +
+	scale_x_discrete(labels = c("Control", "With uncertainty")) +
+	xlab("Group") +
+	ylab("Mean number of licks")
 
 # group versus events
 avg <-data %>%
 	filter(date >= "2021-05-12") %>%
+	filter(ms > 0, ms <= 1200000) %>%
 	group_by(expGroup) %>%
 	summarise(meanEvents = mean(maxEvents), sdEvents = sd(maxEvents))
 point <- data %>%
 	filter(date >= "2021-05-12") %>%
+	filter(ms > 0, ms <= 1200000) %>%
 		group_by(expGroup, raton) %>%
 	summarise(meanEvents = mean(maxEvents))
 point %>%
