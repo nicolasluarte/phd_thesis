@@ -47,7 +47,7 @@ rawData <- rawData %>%
 		mutate(isEvent = getIsEvent(eventsCum),
 		        msFromEvents = getmsFromEvent(isEvent, ms),
 			isTimeout = getIsTimeout(msFromEvents, 20000, eventsCum),
-			isTimeoutThreshold = if_else(msFromEvents >= 2000 & isTimeout == 1, 1, 0)) %>%
+			isTimeoutThreshold = if_else(msFromEvents >= 5000 & isTimeout == 1, 1, 0)) %>%
 ungroup()
 log <- read_csv("~/phd_thesis/experimental_data/uncertainty_fr/data/log/log.csv")
 names(log) <- make.names(names(log), unique=TRUE)
@@ -133,4 +133,3 @@ nestedData %>%
 			  ymax = meanEventsPerSession + semEventsPerSession)) +
 	geom_line(size = 3) +
 	facet_wrap(~condition)
-
