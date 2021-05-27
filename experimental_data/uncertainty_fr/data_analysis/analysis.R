@@ -1,6 +1,7 @@
 library(tidyverse)
 library(ggrepel)
 library(gridExtra)
+library(rstatix)
 
 # load functions
 source("lickMicroStructureFunctions.R")
@@ -120,6 +121,17 @@ nestedData <- nestedData %>%
 			meanLicksPerSession,
 			meanRewardsPerSession))
 
+nestedData <- nestedData %>%
+	unnest(cols = c(eventsPerSpout,
+			licksPerSpout,
+			rewardsPerSpout)) %>%
+	group_by(date, raton) %>%
+	nest() %>%
+	mutate(sumEvents = map(data, function(x) x %>%
+	       summarise(sumEvents = sum(eventsPerSpout)))
+	       ) %>%
+	unnest(cols = c(data, sumEvents))
+
 # example plot with nested data
 nestedData %>%
 	nest(data = c(-meanEventsPerSession,
@@ -133,3 +145,14 @@ nestedData %>%
 			  ymax = meanEventsPerSession + semEventsPerSession)) +
 	geom_line(size = 3) +
 	facet_wrap(~condition)
+
+nestedData %>%
+	filter(condition == 1) %>%
+	t.test(meanEventsPerSession ~ expGroup, .) %>%
+	broom::tidy(.)
+
+eventsTest <- nestedData %>%
+	filter(condition == 1) %>%
+	group_by(date) %>%
+	group_map(~ aov(sumEvents ~ as.factor(expGroup), .) %>%
+		  TukeyHSD())
