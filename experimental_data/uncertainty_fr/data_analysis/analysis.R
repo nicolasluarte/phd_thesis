@@ -2,6 +2,7 @@ library(tidyverse)
 library(ggrepel)
 library(gridExtra)
 library(rstatix)
+library(ggpubr)
 
 # load functions
 source("lickMicroStructureFunctions.R")
@@ -48,7 +49,7 @@ rawData <- rawData %>%
 		mutate(isEvent = getIsEvent(eventsCum),
 		        msFromEvents = getmsFromEvent(isEvent, ms),
 			isTimeout = getIsTimeout(msFromEvents, 20000, eventsCum),
-			isTimeoutThreshold = if_else(msFromEvents >= 5000 & isTimeout == 1, 1, 0)) %>%
+			isTimeoutThreshold = if_else(msFromEvents >= 2000 & isTimeout == 1, 1, 0)) %>%
 ungroup()
 log <- read_csv("~/phd_thesis/experimental_data/uncertainty_fr/data/log/log.csv")
 names(log) <- make.names(names(log), unique=TRUE)
@@ -127,10 +128,18 @@ nestedData <- nestedData %>%
 			rewardsPerSpout)) %>%
 	group_by(date, raton) %>%
 	nest() %>%
-	mutate(sumEvents = map(data, function(x) x %>%
-	       summarise(sumEvents = sum(eventsPerSpout)))
+	mutate(
+	       sumEvents = map(data, function(x) x %>%
+	       summarise(sumEvents = sum(eventsPerSpout))),
+	       sumLicks = map(data, function(x) x %>%
+	       summarise(sumLicks = sum(licksPerSpout))),
+	       sumRewards = map(data, function(x) x %>%
+	       summarise(sumRewards = sum(rewardsPerSpout))),
 	       ) %>%
-	unnest(cols = c(data, sumEvents))
+	unnest(cols = c(data,
+			sumEvents,
+			sumLicks,
+			sumRewards))
 
 # example plot with nested data
 nestedData %>%
@@ -148,11 +157,318 @@ nestedData %>%
 
 nestedData %>%
 	filter(condition == 1) %>%
-	t.test(meanEventsPerSession ~ expGroup, .) %>%
-	broom::tidy(.)
+	aov(eventsPerSpout ~ expGroup, .) %>%
+	tidy()
 
-eventsTest <- nestedData %>%
+plotData <- nestedData %>%
 	filter(condition == 1) %>%
-	group_by(date) %>%
-	group_map(~ aov(sumEvents ~ as.factor(expGroup), .) %>%
-		  TukeyHSD())
+	nest(data = c(-sumEvents,
+		      -sumLicks,
+		      -sumRewards,
+		      -expGroup,
+		      -date))
+p1 <- ggerrorplot(plotData,
+	  x = "expGroup",
+	  y = "sumEvents",
+          color = "expGroup",
+	  palette = "jco",
+          add = "jitter",
+	  desc_stat = "mean_sd",
+	  add.params = list(color = "darkgray")) +
+	stat_compare_means(method = "t.test") +
+	scale_x_discrete(labels = c("control", "treatment")) +
+	xlab("") +
+	ylab("Total events per session") +
+	theme(legend.position = "none")
+p2 <- ggerrorplot(plotData,
+	  x = "expGroup",
+	  y = "sumLicks",
+          color = "expGroup",
+	  palette = "jco",
+          add = "jitter",
+	  desc_stat = "mean_sd",
+	  add.params = list(color = "darkgray")) +
+	stat_compare_means(method = "t.test") +
+	scale_x_discrete(labels = c("control", "treatment")) +
+	xlab("") +
+	ylab("Total licks per session") +
+	theme(legend.position = "none")
+p3 <- ggerrorplot(plotData,
+	  x = "expGroup",
+	  y = "sumRewards",
+          color = "expGroup",
+	  palette = "jco",
+          add = "jitter",
+	  desc_stat = "mean_sd",
+	  add.params = list(color = "darkgray")) +
+	stat_compare_means(method = "t.test") +
+	scale_x_discrete(labels = c("control", "treatment")) +
+	xlab("") +
+	ylab("Total rewards per session") +
+	theme(legend.position = "none")
+g1 <- grid.arrange(p1, p2, p3)
+ggsave("grid1.png", g1)
+
+plotData %>% aov(sumEvents ~ as.factor(expGroup) * as.factor(date), .) %>% summary()
+plotData %>% aov(sumLicks ~ as.factor(expGroup) * as.factor(date), .) %>% tidy()
+plotData %>% aov(sumLicks ~ as.factor(expGroup), .) %>% TukeyHSD()
+plotData %>% aov(sumRewards ~ as.factor(expGroup), .) %>% TukeyHSD()
+
+nestedData %>% filter(condition == 1,
+		      date > "2021-05-24") %>%
+aov(sumEvents ~ as.factor(expGroup) * as.factor(date), .) %>% TukeyHSD()
+
+plotData <- nestedData %>%
+	filter(condition == 1) %>%
+	group_by(raton, expGroup) %>%
+	nest() %>%
+	mutate(
+	       meanEvents = map(data, function(x) x %>%
+	       summarise(meanEvents = mean(sumEvents))),
+	       meanLicks = map(data, function(x) x %>%
+	       summarise(meanLicks = mean(sumLicks))),
+	       meanRewards = map(data, function(x) x %>%
+	       summarise(meanRewards = mean(sumRewards))),
+	       ) %>%
+	unnest(c(meanEvents, meanLicks, meanRewards))
+p1 <- ggerrorplot(plotData,
+	  x = "expGroup",
+	  y = "meanEvents",
+          color = "expGroup",
+          add = "jitter",
+	  palette = "jco",
+	  desc_stat = "mean_sd",
+	  add.params = list(color = "darkgray")) +
+	stat_compare_means(method = "t.test") +
+	scale_x_discrete(labels = c("control", "treatment")) +
+	xlab("") +
+	ylab("Total events per session") +
+	theme(legend.position = "none")
+p2 <- ggerrorplot(plotData,
+	  x = "expGroup",
+	  y = "meanLicks",
+          color = "expGroup",
+	  palette = "jco",
+          add = "jitter",
+	  desc_stat = "mean_sd",
+	  add.params = list(color = "darkgray")) +
+	stat_compare_means(method = "t.test") +
+	scale_x_discrete(labels = c("control", "treatment")) +
+	xlab("") +
+	ylab("Total licks per session") +
+	theme(legend.position = "none")
+p3 <- ggerrorplot(plotData,
+	  x = "expGroup",
+	  y = "meanRewards",
+          color = "expGroup",
+	  palette = "jco",
+          add = "jitter",
+	  desc_stat = "mean_sd",
+	  add.params = list(color = "darkgray")) +
+	stat_compare_means(method = "t.test") +
+	scale_x_discrete(labels = c("control", "treatment")) +
+	xlab("") +
+	ylab("Total rewards per session") +
+	theme(legend.position = "none")
+g2 <- grid.arrange(p1, p2, p3)
+ggsave("grid2.png", g2)
+
+
+ggerrorplot(nestedData %>% filter(expGroup == 0,
+				  condition == 1) %>%
+	    mutate(spoutNumber = as.factor(spoutNumber)),
+	  x = "spoutNumber",
+	  y = "eventsPerSpout",
+          color = "spoutNumber",
+	  palette = "jco",
+          add = "jitter",
+	  desc_stat = "mean_sd",
+	  add.params = list(color = "darkgray")) +
+	stat_compare_means(method = "t.test", paired = TRUE) +
+	scale_x_discrete(labels = c("Left", "Right")) +
+	xlab("") +
+	ylab("Total events per session") +
+	theme(legend.position = "none")
+
+ggerrorplot(nestedData %>% filter(expGroup == 1,
+				  condition == 1) %>%
+	    mutate(randomSpout = as.factor(randomSpout)),
+	  x = "randomSpout",
+	  y = "eventsPerSpout",
+          color = "randomSpout",
+	  palette = "jco",
+          add = "jitter",
+	  desc_stat = "mean_sd",
+	  add.params = list(color = "darkgray")) +
+	stat_compare_means(method = "t.test", paired = TRUE) +
+	scale_x_discrete(labels = c("p = 1", "p = 0.5")) +
+	xlab("") +
+	ylab("Total events per session") +
+	theme(legend.position = "none")
+
+variable <- nestedData %>% filter(expGroup == 1, randomSpout == 0, condition == 1) %>% select(eventsPerSpout)
+fixed <- nestedData %>% filter(expGroup == 1, randomSpout == 1, condition == 1) %>% select(eventsPerSpout)
+t.test(variable$eventsPerSpout, fixed$eventsPerSpout, paired = TRUE)
+
+ggerrorplot(nestedData %>% filter(expGroup == 1,
+				  condition == 1) %>%
+	    mutate(randomSpout = as.factor(randomSpout)),
+	  x = "randomSpout",
+	  y = "eventsPerSpout",
+          color = "randomSpout",
+	  palette = "jco",
+          add = "jitter",
+	  desc_stat = "mean_sd",
+	  add.params = list(color = "darkgray")) +
+	scale_x_discrete(labels = c("p = 1", "p = 0.5")) +
+	xlab("") +
+	ylab("Total events per session") +
+	theme(legend.position = "none") +
+	facet_wrap(~spoutNumber)
+
+nestedData %>% filter(expGroup == 1, condition == 1) %>%
+	mutate(
+	       randomSpout = recode_factor(as.factor(randomSpout),
+	       `0` = "fixed", `1` = "variable"),
+	       spoutNumber = recode_factor(as.factor(spoutNumber),
+	       `0` = "left", `2` = "right")
+	       ) %>%
+	aov(eventsPerSpout ~ as.factor(randomSpout) * as.factor(spoutNumber), .) %>%
+	TukeyHSD()
+
+ggpaired(nestedData %>%
+	    filter(date > "2021-05-05") %>%
+	    mutate(condition = as.factor(condition),
+		   expGroup = recode_factor(as.factor(expGroup),
+					    `0` = "control",
+					    `1` = "treatment"),
+		   raton = as.factor(raton)) %>%
+	    group_by(condition, raton, expGroup) %>%
+	    summarise(sumEvents = mean(sumEvents)),
+	  x = "condition",
+	  y = "sumEvents",
+	  fill = "condition", 
+	  palette = "jco",
+	  label = "raton",
+          add = "jitter",
+	  desc_stat = "mean_sd",
+	  add.params = list(color = "darkgray")) +
+	stat_compare_means(method = "t.test") +
+	scale_x_discrete(labels = c("pre", "post")) +
+	xlab("") +
+	ylab("Total events per session") +
+	theme(legend.position = "none") +
+	facet_wrap(~expGroup)
+
+prePostData <- nestedData %>%
+	filter(
+	       date >= "2021-05-05" & date < "2021-05-12" | date >= "2021-05-20"
+	       ) %>%
+	group_by(date, raton, sumEvents, expGroup, condition) %>%
+	nest() %>%
+	mutate(
+	       expGroup = recode_factor(as.factor(expGroup),
+					    `0` = "control",
+					    `1` = "treatment"),
+	       condition = recode_factor(as.factor(condition), `0` = "pre", `1` = "post"))
+ggerrorplot(
+	  prePostData,
+	  x = "condition",
+	  y = "sumEvents",
+	  palette = "jco",
+	  add.params = list(color = "gray"),
+	  add = "jitter",
+	  desc_stat = "mean_sd",
+	  line.color = "gray",
+	  facet.by = "expGroup"
+	  ) +
+	scale_x_discrete(labels = c("pre", "post")) +
+	xlab("") +
+	ylab("Total events per session") +
+	theme(legend.position = "none")
+
+prePostData %>%
+	aov(sumEvents ~ condition * expGroup, .) %>%
+	TukeyHSD()
+
+prePostData %>% 
+	aov(sumEvents ~ expGroup * condition, .) %>%
+	TukeyHSD() %>%
+	tidy()
+
+nestedData2 <- nestedData %>%
+	filter(
+	       date >= "2021-05-05" & date < "2021-05-12" | date >= "2021-05-20"
+	       ) %>%
+	mutate(
+	       expGroup = recode_factor(as.factor(expGroup),
+					    `0` = "control",
+					    `1` = "treatment"),
+	       condition = recode_factor(as.factor(condition), `0` = "pre", `1` = "post"))
+
+ggpaired(nestedData2 %>%
+	    filter(date > "2021-05-05") %>%
+	    mutate(condition = as.factor(condition),
+		   expGroup = recode_factor(as.factor(expGroup),
+					    `0` = "control",
+					    `1` = "treatment"),
+		   raton = as.factor(raton)) %>%
+	    group_by(condition, raton, expGroup) %>%
+	    summarise(sumEvents = mean(sumEvents)),
+	  x = "condition",
+	  y = "sumEvents",
+	  fill = "condition", 
+	  palette = "jco",
+	  label = "raton",
+          add = "jitter",
+	  desc_stat = "mean_sd",
+	  add.params = list(color = "darkgray")) +
+	scale_x_discrete(labels = c("pre", "post")) +
+	xlab("") +
+	ylab("Total events per session") +
+	theme(legend.position = "none") +
+	facet_wrap(~expGroup)
+
+
+ll <- data %>%
+	group_by(raton, expGroup, condition, date, randomSpout, spoutNumber) %>%
+	mutate(
+	       randomSpout = recode_factor(as.factor(randomSpout), `0` = "fixed", `1` = "random"),
+	       spoutNumber = recode_factor(as.factor(spoutNumber), `0` = "left", `2` = "right")
+	       ) %>%
+	nest() %>%
+	mutate(
+	       nonValidLick =
+	       map(data, function(x) x %>%
+	       summarise(nonValidLick = mean(isTimeoutThreshold)))
+	       ) %>%
+	unnest(nonValidLick)
+ggerrorplot(
+	  ll %>% filter(condition == 1, expGroup == 1),
+	  x = "randomSpout",
+	  y = "nonValidLick",
+	  palette = "jco",
+	  add.params = list(color = "gray"),
+	  add = "jitter",
+	  desc_stat = "mean_sd",
+	  line.color = "gray"
+	  ) +
+	scale_x_discrete(labels = c("p = 1", "p = 0.5")) +
+	xlab("") +
+	ylab("Probability of making licks in time out") +
+	theme(legend.position = "none")
+
+ll %>%
+	filter(condition == 1, expGroup == 1) %>%
+	aov(nonValidLick ~ as.factor(randomSpout), .) %>%
+	TukeyHSD()
+
+ll %>%
+	filter(condition == 1) %>%
+	aov(nonValidLick ~ as.factor(expGroup), .) %>%
+	TukeyHSD()
+
+ll %>%
+	filter(condition == 1, expGroup == 1) %>%
+	aov(nonValidLick ~ as.factor(randomSpout) * as.factor(spoutNumber), .) %>%
+	TukeyHSD()
