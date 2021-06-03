@@ -1,0 +1,5 @@
+#!/bin/sh
+
+rsync -av ~/drive/Luis\ Luarte/Resultados/FR\ Abril\ 2021/data_pc_1/ ~/phd_thesis/experimental_data/uncertainty_fr/data/data_raw/1/
+
+rsync -av ~/drive/Luis\ Luarte/Resultados/FR\ Abril\ 2021/data_pc_2/ ~/phd_thesis/experimental_data/uncertainty_fr/data/data_raw/2/
