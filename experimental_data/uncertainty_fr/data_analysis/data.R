@@ -3,6 +3,7 @@ library(ggrepel)
 library(gridExtra)
 library(rstatix)
 library(ggpubr)
+library(entropy)
 
 # load functions
 source("lickMicroStructureFunctions.R")
@@ -150,4 +151,41 @@ nestedData <- nestedData %>%
 			meanLicks,
 			meanRewards))
 
-nestedData %>% unnest(cols = c(data)) %>% saveRDS(., "data.rds")
+# get if event was rewarded or not
+unnestedData <- nestedData %>% unnest(cols = c(data))
+unnestedData <- unnestedData %>%
+	group_by(date, raton, spoutNumber) %>%
+	mutate(isReward = getIsEvent(rewardsCum)) %>%
+	ungroup()
+
+unnestedData <- unnestedData %>%
+	group_by(date, raton, spoutNumber, eventsCum) %>%
+	mutate(rewardedTrial = cumsum(isReward))
+
+unnestedData <- unnestedData %>%
+	group_by(date, PC) %>%
+	mutate(ms = ms - ms[1])
+
+unnestedData <- unnestedData %>%
+	group_by(date, PC) %>%
+	mutate(bins = cut(ms, c(seq(0, 3600000, 600000)), include.lowest = FALSE))
+
+unnestedData <- unnestedData %>%
+	group_by(date, raton , bins) %>%
+	mutate(
+	       entropy = entropy.empirical((table(spoutNumber) / length(spoutNumber)), unit = "log2")
+	       )
+
+unnestedData <- unnestedData %>%
+	group_by(date, raton) %>%
+	mutate(
+	       sessionEntropy = entropy.empirical((table(spoutNumber) / length(spoutNumber)), unit = "log2")
+	       )
+
+unnestedData %>%
+	filter(condition == "post", msFromEvents < 3000, msFromEvents > 0) %>%
+	ggplot(aes(msFromEvents)) +
+	geom_histogram() +
+	facet_grid(raton~expGroup)
+
+unnestedData %>% saveRDS(., "data.rds")

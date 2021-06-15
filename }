@@ -3,10 +3,6 @@ library(lme4)
 library(lmerTest)
 library(sjPlot)
 library(sjmisc)
-library(ggsci)
-library(ggpubr)
-library(merTools)
-library(gridExtra)
 library(emmeans)
 library(zoo)
 
@@ -24,6 +20,7 @@ date2s <- function(date.vec) {
 df <- df[order(df$date),]
 df$session <- date2s(df$date)
 
+df %>% filter(session == 1, raton == 217) %>% select(licksCum)
 
 # scale and center
 df %>%
@@ -52,151 +49,13 @@ df.licks %>%
 	mutate(baselineLicks = zoo::na.locf(pre)) -> df.licks
 df.licks %>%
 	group_by(raton) %>%
-	mutate(baselineLicks = scale(baselineLicks, center = TRUE, scale = TRUE),
-	       scaledTime = (session-min(session))/(max(session)-min(session))) -> df.licks
-
-# prepare data
-df %>%
-	filter(date < "2021-06-04") %>%
-	group_by(raton, expGroup, condition, session, date) %>%
-	summarise(sumEvents = unique(sumEvents)) -> df.events
-df.events %>%
-	group_by(raton, condition) %>%
-	mutate(baselineEvents = mean(sumEvents)) %>%
-	pivot_wider(names_prefix = c("pre", "post"),
-		    values_from = baselineEvents) %>%
-	mutate(baselineEvents = zoo::na.locf(pre)) -> df.events
-df.events %>%
-	group_by(raton) %>%
-	mutate(baselineEvents = scale(baselineEvents, center = TRUE, scale = TRUE),
-	       scaledTime = (session-min(session))/(max(session)-min(session))) -> df.events
+	mutate(baselineLicks = scale(baselineLicks, center = TRUE, scale = TRUE)) -> df.licks
 
 # model 0
-model.0.l <- glmer.nb(sumLicks ~ (1 | raton) +
-		      condition * expGroup * scaledTime + baselineLicks,
+model.0.l <- glmer.nb((sumLicks) ~ (1 | raton) +
+		      condition * expGroup * session + baselineLicks,
 	  data = df.licks)
 summary(model.0.l)
-# model 0
-model.0.e <- glmer.nb(sumEvents ~ (1 | raton) +
-		      condition * expGroup * scaledTime,
-	  data = df.events)
-summary(model.0.e)
-
-ggeffects::ggpredict(model.0.l, c("scaledTime", "condition", "expGroup")) -> pr
-plot.df <- data.frame(
-		      time = pr$x * 29,
-		      preds = pr$predicted,
-		      lwr = pr$conf.low,
-		      upr = pr$conf.high,
-		      condition = pr$group,
-		      group = pr$facet
-		      )
-ggeffects::ggpredict(model.0.e, c("scaledTime", "condition", "expGroup")) -> pr.events
-plot.df.e <- data.frame(
-		      time = pr.events$x * 29,
-		      preds = pr.events$predicted,
-		      lwr = pr.events$conf.low,
-		      upr = pr.events$conf.high,
-		      condition = pr.events$group,
-		      group = pr.events$facet
-		      )
-
-pre.plot.l <- plot.df %>%
-	filter(condition == "pre", time < 13) %>%
-	ggplot(aes(time, preds, color = group)) +
-	geom_ribbon(aes(ymin = lwr, ymax = upr, fill = group), alpha = 0.3, colour = NA) +
-	geom_line() +
-	ylab("Licks") +
-	xlab("Session") +
-	theme_pubr() +
-	guides(color = FALSE) +
-	labs(fill = "Experimental group") +
-	ggtitle("Model predictions for baseline condition") +
-	theme(plot.title = element_text(hjust = 0.5)) +
-	ylim(c(400, 2000)) +
-	scale_color_uchicago() +
-	scale_fill_uchicago()
-post.plot.l <- plot.df %>%
-	filter(condition == "post", time >= 13) %>%
-	ggplot(aes(time, preds, color = group)) +
-	geom_ribbon(aes(ymin = lwr, ymax = upr, fill = group), alpha = 0.3, colour = NA) +
-	geom_line() +
-	ylab("Licks") +
-	xlab("Session") +
-	theme_pubr() +
-	guides(color = FALSE) +
-	labs(fill = "Experimental group") +
-	ggtitle("Model predictions for uncertainty condition") +
-	theme(plot.title = element_text(hjust = 0.5)) +
-	ylim(c(400, 2000)) +
-	scale_color_uchicago() +
-	scale_fill_uchicago()
-grid.arrange(pre.plot.l, post.plot.l, nrow = 1)
-
-pre.plot.e <- plot.df.e %>%
-	filter(condition == "pre", time < 13) %>%
-	ggplot(aes(time, preds, color = group)) +
-	geom_ribbon(aes(ymin = lwr, ymax = upr, fill = group), alpha = 0.3, colour = NA) +
-	geom_line() +
-	ylab("Events") +
-	xlab("Session") +
-	theme_pubr() +
-	guides(color = FALSE) +
-	labs(fill = "Experimental group") +
-	ggtitle("Model predictions for baseline condition") +
-	theme(plot.title = element_text(hjust = 0.5)) +
-	scale_color_uchicago() +
-	scale_fill_uchicago()
-post.plot.e <- plot.df.e %>%
-	filter(condition == "post", time >= 13) %>%
-	ggplot(aes(time, preds, color = group)) +
-	geom_ribbon(aes(ymin = lwr, ymax = upr, fill = group), alpha = 0.3, colour = NA) +
-	geom_line() +
-	ylab("Events") +
-	xlab("Session") +
-	theme_pubr() +
-	guides(color = FALSE) +
-	labs(fill = "Experimental group") +
-	ggtitle("Model predictions for uncertainty condition") +
-	theme(plot.title = element_text(hjust = 0.5)) +
-	scale_color_uchicago() +
-	scale_fill_uchicago()
-grid.arrange(pre.plot.e, post.plot.e, nrow = 1)
-
-emmeans(model.0.e, pairwise ~expGroup * condition, type = "response")$contrast %>% confint()
-emmeans(model.0.l, pairwise ~expGroup * condition, type = "response", adjust = "none")
-
-model.0.l %>% 
-	emmeans(~ expGroup * condition, ratios = TRUE) %>%
-	contrast(., method = "pairwise", by = "condition")
-
-
-
-
-
-df.licks$preds <- predictInterval(model.0.l, which = "fixed")$fit
-df.licks$upr <- predictInterval(model.0.l)$upr
-df.licks$lwr <- predictInterval(model.0.l)$lwr
-
-df.licks %>%
-	ggplot(aes(session, preds)) +
-	geom_line() +
-	facet_grid(raton~condition)
-
-df.licks %>%
-	ggplot(aes(session, preds, color = expGroup)) +
-	geom_line() +
-	geom_ribbon(aes(ymin = lwr, ymax = upr)) +
-	geom_vline(xintercept = 13) +
-	facet_wrap(~raton)
-
-plot(resid(model.0.l))
-plot(model.0.l)
-
-car::leveneTest(residuals(model.0.l) ~ df.licks$raton)
-boxplot(residuals(model.0.l) ~ as.factor(df.licks$session))
-
-plot_model(model.0.l, type = "eff", term = c("scaledTime", "expGroup", "condition [post]"))
 	
 
 model.licks.1.fit <- lmer(data = df.licks,
