@@ -8,7 +8,6 @@ library(ggpubr)
 library(merTools)
 library(gridExtra)
 library(emmeans)
-library(zoo)
 
 df <- readRDS("data.rds")
 
@@ -35,11 +34,7 @@ df %>%
 	       ) %>%
 	ungroup() -> df
 
-# model 1: licks in two conditions
-
-
-
-# prepare data
+# prepare data for licks
 df %>%
 	filter(date < "2021-06-04") %>%
 	group_by(raton, expGroup, condition, session, date) %>%
@@ -55,7 +50,7 @@ df.licks %>%
 	mutate(baselineLicks = scale(baselineLicks, center = TRUE, scale = TRUE),
 	       scaledTime = (session-min(session))/(max(session)-min(session))) -> df.licks
 
-# prepare data
+# prepare data for events
 df %>%
 	filter(date < "2021-06-04") %>%
 	group_by(raton, expGroup, condition, session, date) %>%
@@ -70,6 +65,152 @@ df.events %>%
 	group_by(raton) %>%
 	mutate(baselineEvents = scale(baselineEvents, center = TRUE, scale = TRUE),
 	       scaledTime = (session-min(session))/(max(session)-min(session))) -> df.events
+
+# licks models
+m.restricted.1 <- glmer.nb(sumLicks ~ 1 + (1 | raton), data = df.licks)
+m.restricted.2 <- glmer.nb(sumLicks ~ 1 + (1 | raton) + condition, data = df.licks)
+m.restricted.3 <- glmer.nb(sumLicks ~ 1 + (1 | raton) + condition * expGroup, data = df.licks)
+m.restricted.4 <- glmer.nb(sumLicks ~ 1 + (1 | raton) + condition * expGroup * scaledTime, data = df.licks)
+model.0.l <- glmer.nb(sumLicks ~ (1 | raton) + condition + expGroup + scaledTime + baselineLicks 
+		+ condition:expGroup + condition:scaledTime + expGroup:scaledTime + expGroup:condition:scaledTime,
+	data = df.licks)
+summary(m.l)
+
+drop1(m.l)
+
+AIC(m.restricted.1,
+    m.restricted.2,
+    m.restricted.3,
+    m.restricted.4,
+    model.0.l
+) 
+
+modelsummary::get_gof(m.restricted)
+
+# timeout model
+df %>%
+	filter(isEvent >= 0) -> df.valid
+model.0.v <- glmer(isEvent ~ (1 | raton) + condition + expGroup,
+	data = df.valid,
+	family = "binomial")
+summary(m.l)
+
+df.valid %>%
+	filter(date < "2021-06-04") %>%
+	group_by(raton) %>%
+	mutate(sumLicksScaled = scale(sumLicks, center = TRUE, scale = TRUE)) %>%
+	ungroup() %>%
+	group_by(expGroup,raton, session, isTimeOutThreshold) %>%
+	summarise(valid = n() / sumLicks, sumLicks = sumLicksScaled) %>%
+	ggplot(aes(sumLicks, valid, color = isTimeOutThreshold)) +
+	geom_point() +
+	geom_smooth(method = "lm") +
+	facet_grid(expGroup~raton)
+
+df.valid %>%
+	filter(date < "2021-06-04") %>%
+	filter(randomSpout =="fixed") %>%
+	group_by(raton) %>%
+	mutate(sumLicksScaled = scale(sumLicks, center = TRUE, scale = TRUE)) %>%
+	ungroup() %>%
+	group_by(raton, spoutNumber) %>%
+	mutate(licksPerSpoutScaled = scale(licksPerSpout, center = TRUE, scale = TRUE)) %>%
+	ungroup() %>%
+	group_by(expGroup,raton, session, isTimeOutThreshold) %>%
+	summarise(valid = n() / sumLicks, sumLicks = sumLicksScaled) %>%
+	ggplot(aes(session, valid, color = isTimeOutThreshold)) +
+	geom_point() +
+	geom_vline(xintercept = 13) +
+	geom_smooth(method = "gam") +
+	facet_grid(expGroup~raton)
+
+df.valid %>%
+	filter(date < "2021-06-04") %>%
+	mutate() %>%
+	group_by(raton) %>%
+	mutate(sumLicksScaled = scale(sumLicks, center = TRUE, scale = TRUE)) %>%
+	ungroup() %>%
+	group_by(raton, spoutNumber) %>%
+	mutate(licksPerSpoutScaled = scale(licksPerSpout, center = TRUE, scale = TRUE)) %>%
+	ungroup() %>%
+	group_by(expGroup,raton, session, isTimeOutThreshold, condition, randomSpout) %>%
+	summarise(valid = n() / sumLicks, sumLicks = sumLicksScaled) -> df.valid.licks
+
+df.valid %>%
+	mutate(scaledTime = (session-min(session))/(max(session)-min(session))) -> df.valid
+
+df %>%
+	mutate(scaledTime = (session-min(session))/(max(session)-min(session))) -> df
+
+model.1.v <- lmer(valid ~ (1 | raton) + condition * expGroup * session + sumLicks,
+		data = df.valid.licks %>% filter(isTimeOutThreshold == "valid"))
+
+model.1.v <- glmer(isTimeOutThreshold ~ (1 | raton) + condition * sumLicks,
+		   family = "binomial",
+		data = df %>% 
+			group_by(raton) %>%
+			mutate(sumLicks = scale(sumLicks, center = TRUE, scale = TRUE)) %>%
+			ungroup() %>%
+			filter(expGroup == "treatment",
+			       randomSpout == "fixed",
+				date >= "2021-05-05",
+				date < "2021-06-04")
+)
+
+summary(model.1.v)
+
+df %>%
+	filter(expGroup == "treatment", date >= "2021-05-05", date < "2021-06-05") %>%
+	group_by(isTimeOutThreshold, condition) %>%
+	summarise(m = mean(as.numeric(isTimeOutThreshold)))
+
+plot_model(model.1.v, type = "eff", term = c("sumLicks", "condition"))
+plot_model(model.1.v, type = "eff", term = c("sumLicks", "expGroup", "condition"))
+emmeans(model.1.v, pairwise ~ condition * sumLicks, type = "response")
+
+ggeffects::ggpredict(model.1.v, c("scaledTime [all]", "condition", "sumLicks")) -> pr.v
+plot.df.v <- data.frame(
+		      time = pr.v$x * 29,
+		      preds = pr.v$predicted,
+		      lwr = pr.v$conf.low,
+		      upr = pr.v$conf.high,
+		      condition = pr.v$group,
+		      group = pr.v$facet
+		      )
+
+pre.plot.v <- plot.df.v %>%
+	filter(condition == "pre", time < 13) %>%
+	ggplot(aes(time, preds, color = group)) +
+	geom_ribbon(aes(ymin = lwr, ymax = upr, fill = group), alpha = 0.3, colour = NA) +
+	geom_line() +
+	ylab("Licks in time") +
+	xlab("Session") +
+	theme_pubr() +
+	guides(color = FALSE) +
+	labs(fill = "Standarized Licks") +
+	ggtitle("Model predictions for baseline condition") +
+	theme(plot.title = element_text(hjust = 0.5)) +
+	scale_color_uchicago() +
+	scale_fill_uchicago()
+post.plot.v <- plot.df.v %>%
+filter(condition == "post", time >= 13) %>%
+	ggplot(aes(time, preds, color = group)) +
+	geom_ribbon(aes(ymin = lwr, ymax = upr, fill = group), alpha = 0.3, colour = NA) +
+	geom_line() +
+	ylab("Licks") +
+	xlab("Session") +
+	theme_pubr() +
+	guides(color = FALSE) +
+	labs(fill = "Experimental group") +
+	ggtitle("Model predictions for uncertainty condition") +
+	theme(plot.title = element_text(hjust = 0.5)) +
+	scale_color_uchicago() +
+	scale_fill_uchicago()
+licks.plot <- grid.arrange(pre.plot.v, post.plot.v, nrow = 1)
+
+ggsave("licks.plot.png", licks.plot, height = 8, width = 12)
+
+emmeans(model.0.v, pairwise ~expGroup, type = "response")
 
 # model 0
 model.0.l <- glmer.nb(sumLicks ~ (1 | raton) +
@@ -131,7 +272,9 @@ post.plot.l <- plot.df %>%
 	ylim(c(400, 2000)) +
 	scale_color_uchicago() +
 	scale_fill_uchicago()
-grid.arrange(pre.plot.l, post.plot.l, nrow = 1)
+licks.plot <- grid.arrange(pre.plot.l, post.plot.l, nrow = 1)
+ggsave("licks.plot.png", licks.plot, height = 8, width = 12)
+
 
 pre.plot.e <- plot.df.e %>%
 	filter(condition == "pre", time < 13) %>%
@@ -161,10 +304,29 @@ post.plot.e <- plot.df.e %>%
 	theme(plot.title = element_text(hjust = 0.5)) +
 	scale_color_uchicago() +
 	scale_fill_uchicago()
-grid.arrange(pre.plot.e, post.plot.e, nrow = 1)
+events.plot <- grid.arrange(pre.plot.e, post.plot.e, nrow = 1)
+ggsave("events.plot.png", events.plot, height = 8, width = 12)
 
-emmeans(model.0.e, pairwise ~expGroup * condition, type = "response")$contrast %>% confint()
+
+b <- parameters::bootstrap_model(model.0.l, iterations = 1000)
+e <- emmeans(b, consec ~ expGroup * condition)
+parameters::model_parameters(e)
+emmeans(model.0.l, pairwise ~expGroup * condition, type = "response", adjust = "none")$contrasts %>% confint()
 emmeans(model.0.l, pairwise ~expGroup * condition, type = "response", adjust = "none")
+
+df.licks %>%
+	ggplot(aes(session, sumLicks, color = expGroup)) +
+	geom_point() +
+	geom_vline(xintercept = 13) +
+	geom_smooth() +
+	facet_grid(expGroup~raton)
+
+df.events %>%
+	ggplot(aes(session, sumEvents, color = expGroup)) +
+	geom_point() +
+	geom_vline(xintercept = 13) +
+	geom_smooth() +
+	facet_grid(expGroup~raton)
 
 model.0.l %>% 
 	emmeans(~ expGroup * condition, ratios = TRUE) %>%
@@ -189,6 +351,7 @@ df.licks %>%
 	geom_ribbon(aes(ymin = lwr, ymax = upr)) +
 	geom_vline(xintercept = 13) +
 	facet_wrap(~raton)
+
 
 plot(resid(model.0.l))
 plot(model.0.l)
@@ -355,13 +518,11 @@ df %>%
 
 # lick density
 df %>%
-	filter(expGroup == "treatment", msFromEvents < 1000, msFromEvents > 0) %>%
+	filter(msFromEvents < 5000, msFromEvents > 0, randomSpout == "fixed") %>%
 	ggplot(aes(msFromEvents)) +
-	geom_density(aes(y = ..scaled..)) +
-	facet_grid(condition~raton~rewardedTrial, scales = "free")
+	geom_density(aes(y = ..scaled.., color = condition)) +
+	facet_grid(raton~expGroup, scales = "free")
 
 df %>% filter(raton == 219, condition == "post", randomSpout == "variable") %>%
 	select(isEvent, isReward, rewardedTrial, eventsCum) %>%
 	View()
-
-
