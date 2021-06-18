@@ -1,38 +1,155 @@
-library(tidymodels)
 library(lme4)
 library(lmerTest)
 library(sjPlot)
 library(sjmisc)
 library(ggsci)
 library(ggpubr)
-library(merTools)
 library(gridExtra)
 library(emmeans)
+library(tidyverse)
 
 df <- readRDS("data.rds")
 
 # function to transform date to sessions
 date2s <- function(date.vec) {
-	sort(date.vec) %>%
-		diff() %>%
-		{ if_else(. > 0, 1, 0) } %>%
-		cumsum() -> session
-	session <- c(1,session + 1)
-	return(session)
+sort(date.vec) %>%
+	diff() %>%
+	{ if_else(. > 0, 1, 0) } %>%
+	cumsum() -> session
+session <- c(1,session + 1)
+return(session)
 }
 df <- df[order(df$date),]
 df$session <- date2s(df$date)
 
+# raw data plots
 
-# scale and center
 df %>%
-	group_by(raton, condition) %>%
-	mutate(
-	       sumLicksScaled = scale(sumLicks, center = TRUE, scale = TRUE),
-	       sumEventsScaled = scale(sumEvents, center = TRUE, scale = TRUE),
-	       sumRewardsScaled = scale(sumRewards, center = TRUE, scale = TRUE)
+	filter(
+	       date < "2021-06-04",
+	       date >= "2021-05-05"
 	       ) %>%
-	ungroup() -> df
+	group_by(session, expGroup) %>%
+	summarise(sumLicks = mean(sumLicks)) %>%
+	ggplot(aes(session, sumLicks, color = expGroup)) +
+	geom_line()
+
+
+df %>%
+	filter(
+	       date < "2021-06-04",
+	       date >= "2021-05-05",
+	       session != 12
+	       ) %>%
+	group_by(raton) %>%
+	nest() %>%
+	mutate(
+	       baseline = map(
+			      data, ~mean(.x %>%
+			      filter(session <= 13, session >= 10) %>%
+			      select(sumLicks) %>%
+			      unlist()
+			      )
+			      )
+	       ) %>%
+	unnest(c(data, baseline)) %>%
+	group_by(raton, session, expGroup, condition, sumLicks, baseline) %>%
+	nest() %>%
+	select(-c(data)) -> deltas
+
+deltas %>%
+	mutate(mat = if_else(
+			       condition == "post",
+			       1,
+			       0),
+	       delta = sumLicks - (baseline * mat)
+	) %>%
+	group_by(raton, expGroup, condition, session) %>%
+	summarise(delta_mean = unique(delta)) %>%
+	group_by(expGroup, condition, session) %>%
+	mutate(group_mean = mean(delta_mean), sem = sd(delta_mean) / sqrt(4)) %>%
+	filter(condition == "post") %>%
+	ggplot(aes(session, delta_mean, color = raton)) +
+	geom_point(alpha = 0.3) +
+	geom_line(alpha = 0.3) +
+	geom_line(aes(session, group_mean), color = "black") +
+	geom_errorbar(aes(ymin = group_mean - sem, ymax = group_mean + sem), color = "black") +
+	geom_hline(yintercept = 0, color = "grey70") +
+	facet_grid(~expGroup) +
+	theme_pubr()
+
+
+
+
+
+# licks
+df %>%
+	filter(
+	       date < "2021-06-04",
+	       session != 12
+	       ) %>%
+	group_by(raton) %>%
+	group_by(session, expGroup) %>%
+	summarise(mean_licks = mean(sumLicks) / mean(sumEvents), sem_licks = sd(sumLicks) / sqrt(4)) %>%
+	filter(sem_licks > 0) %>%
+	ggplot(aes(session, mean_licks, color = expGroup)) +
+	geom_point() +
+	geom_line() +
+	geom_vline(xintercept = 13) +
+	theme_bw() +
+	ylab("Promedio de licks") +
+	xlab("Sesiones") +
+	labs(color = "Grupo experimental") +
+	scale_colour_discrete(labels = c("Tratamiento", "Control"))
+
+
+# licks in or out of time
+
+model.1.v <- glmer(isTimeoutThreshold ~ (1 | raton) + condition * expGroup,
+	   family = "binomial",
+	data = df %>% 
+		filter(
+		       rewardedTrial == 1,
+			date >= "2021-05-05",
+			date < "2021-06-04")
+)
+
+emmeans(model.1.v, pairwise ~ condition * expGroup, type = "response")
+
+# raw data
+
+df %>%
+	filter(
+	       rewardedTrial == 1,
+	       date >= "2021-05-05",
+	       date < "2021-06-04"
+	       ) %>%
+	group_by(session, raton, expGroup, condition, isTimeoutThreshold) %>%
+	summarise(n = n()) %>%
+	pivot_wider(names_from = isTimeoutThreshold, values_from = n) %>%
+	summarise(sum.val = impulsive + not_impulsive, percent.impulsive = impulsive / sum.val,
+		  percent.not_impulsive = not_impulsive / sum.val,
+		  percent.diff = (percent.impulsive)) %>%
+	ungroup() %>%
+	group_by(raton, expGroup, condition) %>%
+	summarise(mean.impulsive = mean(percent.diff), sd = sd(percent.diff) ) -> impulsive.licks
+impulsive.licks %>%
+	ggplot(aes(condition, mean.impulsive, group = 1, color = expGroup)) +
+	geom_point() +
+	geom_errorbar(aes(ymin = mean.impulsive - sd, ymax = mean.impulsive + sd)) +
+	geom_line() +
+	facet_grid(~raton)
+
+a %>%
+	ggplot(aes(session, percent.impulsive, color = expGroup)) +
+	geom_point() +
+	geom_line() +
+	geom_vline(xintercept = 13) +
+	geom_smooth() +
+	facet_grid(~raton)
+
+
+
 
 # prepare data for licks
 df %>%
@@ -145,28 +262,81 @@ df %>%
 model.1.v <- lmer(valid ~ (1 | raton) + condition * expGroup * session + sumLicks,
 		data = df.valid.licks %>% filter(isTimeOutThreshold == "valid"))
 
-model.1.v <- glmer(isTimeOutThreshold ~ (1 | raton) + condition * sumLicks,
+
+
+df %>%
+	group_by(raton, condition) %>%
+	mutate(baselineLicks = mean(sumLicks)) %>%
+	pivot_wider(names_prefix = c("pre", "post"),
+		    values_from = baselineLicks) %>%
+	mutate(baselineLicks = zoo::na.locf(pre)) -> df
+
+df %>%
+	filter(randomSpout == "fixed") %>%
+	group_by(raton, expGroup, condition, isTimeOutThreshold) %>%
+	summarise(n = n()) %>%
+	nest() %>%
+	mutate(ratio.valid = map(data, function(x) x %>% summarise(sum.valid = sum(x$n)))) %>%
+	unnest(cols = c(data, sum.valid)) %>%
+	filter(isTimeOutThreshold == "notValid") %>%
+	summarise(percent.invalid = (n)) -> valid.licks
+valid.licks %>%
+	ggplot(aes(condition, percent.invalid, group = 1, color = expGroup)) +
+	geom_point() +
+	geom_line() +
+	facet_grid(~raton)
+
+df %>%
+	filter(randomSpout == "fixed",
+	       date >= "2021-05-05",
+	       date < "2021-06-04"
+	       ) %>%
+	group_by(session, raton, expGroup, condition, isTimeOutThreshold, baselineLicks) %>%
+	summarise(n = n()) %>%
+	pivot_wider(names_from = isTimeOutThreshold, values_from = n) %>%
+	summarise(sum.val = valid + notValid, percent.valid = notValid / sum.val) %>%
+	ungroup() %>%
+	group_by(raton, expGroup, condition) %>%
+	summarise(mean.valid = mean(percent.valid), sd = sd(percent.valid) ) -> valid.licks
+
+valid.licks %>%
+	ggplot(aes(condition, mean.valid, group = 1, color = expGroup)) +
+	geom_point() +
+	geom_errorbar(aes(ymin = mean.valid - sd, ymax = mean.valid + sd))
+	geom_line() +
+	facet_grid(~raton)
+
+valid.licks %>%
+	ggplot(aes(b, ratio.valid)) +
+	geom_point() +
+	facet_wrap(~condition)
+
+model.1.v <- glmer(isTimeOutThreshold ~ (1 | raton) + condition * expGroup + baselineLicks,
 		   family = "binomial",
 		data = df %>% 
-			group_by(raton) %>%
-			mutate(sumLicks = scale(sumLicks, center = TRUE, scale = TRUE)) %>%
+			group_by(raton, condition) %>%
+			mutate(baselineLicks = scale(baselineLicks, center = TRUE, scale = TRUE)) %>%
 			ungroup() %>%
-			filter(expGroup == "treatment",
+			filter(
 			       randomSpout == "fixed",
+			       spoutNumber == "right",
 				date >= "2021-05-05",
 				date < "2021-06-04")
 )
 
 summary(model.1.v)
 
+
+
+
 df %>%
 	filter(expGroup == "treatment", date >= "2021-05-05", date < "2021-06-05") %>%
 	group_by(isTimeOutThreshold, condition) %>%
 	summarise(m = mean(as.numeric(isTimeOutThreshold)))
 
-plot_model(model.1.v, type = "eff", term = c("sumLicks", "condition"))
+plot_model(model.1.v, type = "eff", term = c("sumLicks", "condition", "expGroup"))
 plot_model(model.1.v, type = "eff", term = c("sumLicks", "expGroup", "condition"))
-emmeans(model.1.v, pairwise ~ condition * sumLicks, type = "response")
+emmeans(model.1.v, pairwise ~ condition * expGroup + baselineLicks, type = "response")
 
 ggeffects::ggpredict(model.1.v, c("scaledTime [all]", "condition", "sumLicks")) -> pr.v
 plot.df.v <- data.frame(
