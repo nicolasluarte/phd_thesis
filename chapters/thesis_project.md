@@ -48,64 +48,270 @@ To determine how uncertainty in food-access increases food-seeking behavior we w
 
 ## The natural setting for food-seeking behavior
 
-Foraging are all behaviors related to obtaining food, including feeding and hoarding
-[@V3Z2UVAU#Kramer_2001]. Within foraging, food-seeking behavior precedes actual intake and is the re-orientation of attention and locomotor activity to acquire food. A successful food-seeking behavior uses the least amount of resources while reducing exposure to potential predators to find food. Food-seeking is a dynamic behavior: the environment is constantly changing along with food locations, so strategies must constantly adapt to obtain food [@9XCDNBAM#Bartumeus_Etal_2016; @BWKDXXFW#Kölzsch_Etal_2015]. Moreover, animals have incomplete knowledge about location, quality, and the probability of obtaining food [@ZD73QGIR#Pyke_1984 ]. Thus, a foraging animal must determine its food-seeking behavior with only partial knowledge of where food is located.
+Foraging are all behaviors related to obtaining food, including feeding and
+hoarding [@V3Z2UVAU#Kramer_2001]. Within foraging, food-seeking behavior
+precedes actual intake and is the re-orientation of attention and locomotor
+activity to acquire food. A successful food-seeking behavior uses the least
+amount of resources while reducing exposure to potential predators to find food.
+Because the environment is in constant change, food seeking strategies must be
+in constant adaptation [@9XCDNBAM#Bartumeus_Etal_2016;
+@BWKDXXFW#Kölzsch_Etal_2015]. However, animals are never completly aware of
+these environmental changes, food location, quality and the probability of
+obtaining food are only partially known [@ZD73QGIR#Pyke_1984 ]. Thus, the main
+challenge for the foraging animal is how to determine an optimal strategy to
+procure food while having only partial knowledge of food location.
 
-The necessary information to determine a food-seeking strategy are the overall statistical properties of the environment: how dense are the food targets in a given area, how variable is the quality of such resources, and what is the expected outcome of foraging here or there. These properties should not be considered in isolation. For example, not considering changes in food quality could lead to a search for food in an area with an overall low food quality, increasing the risk of starvation. This problem begs the question: what kind of strategy could accomplish this while having only partial or incomplete knowledge about the food environment? 
+The necessary information to determine a food-seeking strategy are the overall
+statistical properties of the environment: how dense are the food targets in a
+given area, how variable is the quality of such resources, and what is the
+expected outcome of foraging here or there. These properties should not be
+considered in isolation. For example, not considering changes in food quality
+could lead to a search for food in an area with an overall low food quality,
+increasing the risk of starvation. This problem begs the question: _**what kind of
+strategy could accomplish this while having only partial or incomplete knowledge
+about the food environment?**_
 
+Distribution fitting of movement data of different species (including human) has
+shown that food-seeking behavior tends to follow Lévy-walk patterns
+[@7YQKP7Z2#Garg_Kello_2021; @I2BS842S#Reynolds_Etal_2018;
+@TPRPLPEC#Viswanathan_Etal_1996; @BWKDXXFW#Kölzsch_Etal_2015]. Lévy-walks are
+random walks with a Lévy distribution, which produces heavy-tails and describes
+multiple concentrated movements with sharp turning angles followed by few
+ballistic displacements. These patterns produce optimal searches in various
+environments with a patchy distribution of resources (clumped resources distant
+to one another) [@97UESCC6#Wosniack_Etal_2017]. Although how animals produce
+Lévy search patterns is unknown [@I2BS842S#Reynolds_Etal_2018], this might be
+partially independent of sensory information [@M5RXPXSZ#Humphries_Sims_2014;
+@5WUMQR2H#Sims_Etal_2019]. This strategy probably evolved to optimize food
+searching with partial or complete lack of knowledge of food location
+[@97UESCC6#Wosniack_Etal_2017].
 
-Distribution fitting of movement data of different species (including human) has shown that food-seeking behavior tends to follow Lévy-walk patterns [@7YQKP7Z2#Garg_Kello_2021; @I2BS842S#Reynolds_Etal_2018;
-@TPRPLPEC#Viswanathan_Etal_1996; @BWKDXXFW#Kölzsch_Etal_2015]. Lévy-walks are random walks with a Lévy distribution, which produces heavy-tails and describes multiple concentrated movements with sharp turning angles followed by few ballistic displacements. These patterns produce optimal searches in various environments with a patchy distribution of resources (clumped resources distant to one another) [@97UESCC6#Wosniack_Etal_2017]. Although how animals produce Lévy search patterns is unknown [@I2BS842S#Reynolds_Etal_2018], this might be partially independent of sensory information [@M5RXPXSZ#Humphries_Sims_2014; @5WUMQR2H#Sims_Etal_2019]. This strategy probably evolved to optimize food searching with partial or complete lack of knowledge of food location [@97UESCC6#Wosniack_Etal_2017].
+Lévy-walks is a ubiquitous strategy that does not rely on sensory information,
+and might be an ancient ‘base’ strategy to deal with locating food in uncertain
+environments [@BWKDXXFW#Kölzsch_Etal_2015; @5WUMQR2H#Sims_Etal_2019]. However,
+after a food encounter, the search strategy switches to a more focused one
+similar to Brownian-motion, following random trajectories within a more enclosed
+space, possibly reflecting an adaptation to the usual distribution of food
+within patches: if one encounters food, there is a good chance that more food
+will be nearby [@5KMWW8NS#Reynolds_Frye_2007;
+@F9HICU4A#Nauta_Khaluf_Simoens_2020]. This suggests that food seeking behavior
+likely evolved to deal with food location uncertainty that could not be reduced
+by perceptual information.
 
-Lévy-walks is a ubiquitous strategy that does not rely on sensory information, and might be an ancient ‘base’ strategy to deal with locating food in uncertain environments [@BWKDXXFW#Kölzsch_Etal_2015; @5WUMQR2H#Sims_Etal_2019]. However, after a food encounter, the search strategy switches to a more focused one similar to Brownian-motion, following random trajectories within a more enclosed space, possibly reflecting an adaptation to the usual distribution of food within patches: if one encounters food there is a good chance that more food will be nearby [@5KMWW8NS#Reynolds_Frye_2007; @F9HICU4A#Nauta_Khaluf_Simoens_2020]. This suggests that food seeking behavior likely evolved to deal with food location uncertainty that could not be reduced by perceptual information.
-
-Here, we proposed that Levy-walks could capture the intuition that food-seeking behavior relies on strategies adapted to deal with food location uncertainty. Having a ‘base’ strategy that does not rely on perceptual information might seem to end in an inflexible strategy. However, uncertainty itself can modify food-seeking vigor [@B2MUELZC#Anselme_Robinson_Berridge_2013], increasing the number of food-seeking bouts [@3YWCKUUK#Anselme_Otto_Güntürkün_2017; @HJ7CGIEU#Anselme_Robinson_2019]. In the next section, we will explore how animals sense uncertainty and why this is adaptive when perceptual abilities are limited.
+Starting from the base that animals have only partial knowledge about food
+location, we asked what strategy could provide optimal results given this
+constraint. Lévy-walks fit within this constraint providing a way to seeking for
+food without relying on perceptual information. Moreover, we proposed that this
+strategy could have emerged to lead with environment uncertainty. In the next
+section, we will explore how considering uncertainty within the food-seeking
+strategy can be useful when perceptual abilities are limited, and how
+uncertainty itself can modify food-seeking behavior
+[@HJ7CGIEU#Anselme_Robinson_2019; @3YWCKUUK#Anselme_Otto_Güntürkün_2017;
+@C6Z374UG#Anselme_Güntürkün_2019].
 
 ## Foraging and uncertainty
 
-As discussed, animals likely adapted its food-seeking behavior to find food within an uncertain food environment. Here, we will show how environmental uncertainty can regulate food-seeking behavior, and that uncertainty can be processed without the need for extensive computation in certain brain structures. 
+As discussed previously, animals adopted food-seeking strategies to procure food
+within uncertain environments [@M5RXPXSZ#Humphries_Sims_2014;
+@5WUMQR2H#Sims_Etal_2019]. Here, we will show how environmental uncertainty can
+regulate food-seeking behavior, its easily computed, and how brain structures
+readily can represent it.
 
-An animal that does not consider the stochastic nature of its food environment in its food-seeking behavior will act greedily upon sampled values. Acting greedily implies that the animal will always choose the option that yielded the most value in an initial random sampling, which neglects that  the samples come from a stochastic reward process that changes over time. This is problematic as it makes food-seeking strategies insensitive to reward variation @2BEHEM7X#Sutton_Barto_2018]. To improve upon the greedy case one could propose that animals act upon the mean rewards, such as the classical model by @ESYGCSLH#Charnov_1976, which determines the strategy based on the current patch value against the global mean of the environment. Nevertheless, such ‘rule-based’ models do not provide good fit to behavioral data [@GC6MVWQU#Nonacs_2001; @9XVRLKC3#LeHeron_Etal_2020; @RR87DVIX#Pyke_2010; @H9JQCFZA#Hayden_Pearson_Platt_2011]. ‘Rule-based’ models propose that animals guide their behavior by choosing foraging areas where the mean rate of food acquisition is equal or larger than the global average (e.g. @ESYGCSLH#Charnov_1976). However, due to limited perceptual abilities and environment stochastic nature, keeping track of a global average is not possible. An alternative is that animals do not keep track of the global average, but the uncertainty of their food environment. Nevertheless, to propose that perceived uncertainty modulates food-seeking behavior requires that animals have the ability to track uncertainty-related features.
+To show how environmental uncertainty regulates food-seeking behavior, we will
+expose two case, one without considering uncertainty within food-seeking
+behavior, and the alternative case when it is considered. For the first case, we
+can assume that the animal will randomly sample its alternatives and then pick
+the one that, at that time, delivered the greatest value. This sampling and
+action selection strategy is called greedy [@JH5D2C9Z#Tokic_Palm_2011]. Acting
+greedily implies that the animal will always choose the option that yielded the
+most value in an initial random sampling, neglecting that  the samples come from
+a stochastic reward process that changes over time. This is problematic as it
+makes food-seeking strategies insensitive to reward variation
+[@2BEHEM7X#Sutton_Barto_2018]. An improvement over acting greedily is to store
+in memory the mean rewards, this can provide a way to compare if the selected
+alternative is good or bad compared to a global reference of what is the overall
+quality of the environment. The classical model by @ESYGCSLH#Charnov_1976,
+proposes that animals should decide whether to stay or leave a certain location
+based on the mean value of the whole environment. However, such model does not
+provide good fit to behavioral data, showing a systematic bias to stay more time
+within a certain location that the model predicts [@GC6MVWQU#Nonacs_2001;
+@9XVRLKC3#LeHeron_Etal_2020; @RR87DVIX#Pyke_2010;
+@H9JQCFZA#Hayden_Pearson_Platt_2011].
 
-One way of incorporating uncertainty is through risk, which considers the spread (i.e. standard deviation) of possible outcomes [@VACKG3ZK#Rothwell_Stock_1988]. In humans, the anterior cingulate cortex (ACC) activity tracks risk in decision tasks [@GLI8DY99#Christopoulos_Etal_2009]. Moreover, ACC is able to track risk in a context-dependent fashion: it considers cue-related information to determine the risk and expected value of a given option [@5ANLDC83#VanHolstein_Floresco_2020]. While risk is the component of uncertainty that measures the spread of outcome, volatility indicates how often an environment changes how an action and an outcome are related, which is also readily tracked by ACC [@BHR2NAEI#Behrens_Etal_2007]. The main goal of tracking uncertainty is to augment the chance of success while searching for food. In that regard, filtering out uncertainty regarding outcomes can prove beneficial, as the actual outcome prediction does not become affected by noise. This means that if a given area is likely to provide good quality and amount of food, we should keep searching for food in that area, even when sometimes our search results are bad. However, how many bad outcomes we should tolerate can only be determined if we know the associated outcome uncertainty. @X6XAHBZA#Stolyarova_Izquierdo_2017 showed that rats could optimally choose options with more value (less mean reward waiting time) despite large associated variability. Furthermore, lesions in the orbitofrontal cortex (OFC) showed an impaired ability to change preference when the mean rewards were up or downshifted; that is, value inference became noisy. Together, these data show that measures of uncertainty, such as risk and volatility can be tracked by brain structures, and this contributes to determining the expected value of an option.
+For the second case, one way of incorporating uncertainty is through considering
+the spread (i.e. standard deviation) over possible outcomes
+[@VACKG3ZK#Rothwell_Stock_1988]. This computation of uncertainty implies an
+average outcome from which the spread is observed, the anterior cingulate cortex
+(ACC) might support this, as is able to represent the magnitude of the spread in
+decision making tasks [@GLI8DY99#Christopoulos_Etal_2009]. The representation of
+spread within the ACC is quite precise, as is able to integrate cue information
+for its representations, that is, a measure of uncertainty, as spread over the
+average value, is considered for every cue-related option or context
+[@5ANLDC83#VanHolstein_Floresco_2020]. On the other hand, uncertainty can appear
+when the outcomes generated by certain action changes. The ACC activity
+increases when action-outcome contingencies change drastically
+[@BHR2NAEI#Behrens_Etal_2007]. Thus, ACC activity can signal whether an outcome
+is within the expected values or the value obtained is totally different from
+expected. Being able to distinguish between this two cases is extremelly
+important to increase success while searching for food, an animal should not
+leave a good spot if it ocasionally bring bad results, and should leave a good
+spot if it starts to have consistenly bad results. The orbitofrontal cortex
+(OFC) has a role in this regulation. @X6XAHBZA#Stolyarova_Izquierdo_2017 showed
+that rats could choose the option with larger mean value despite large
+variability. However, a lesion to the orbitofrontal cortex (OFC) impaired this
+ability, making rat unable to change their option when the mean value was
+decreased. Together, these data show that different measures of uncertainty, are
+tracked by brain structures, allowing to choose the best option filtering out
+the noise.
 
-Being able to track uncertainty can provide information about how to behave in any given environment. Thus, an increase in the variability of the value of a food source should trigger an increase in exploratory behavior to find new food sources and update the expected value of the current food source. The intuition that an animal optimizes its food choices according to the mean expected is captured in the models of expected and unexpected uncertainty @4BJ2B6KB#Yu_Dayan_2005, they propose expected uncertainty as the uncertainty regarding outcomes when contingencies (outcome given a particular action) remains stable but its subject to some noise, and unexpected uncertainty representing a drastic change in the contingencies that likely reflects a structural change in the environment. More precisely, the expected/unexpected uncertainty model proposes that if the obtained rewards present some variation it should not modify learned contingencies that map actions with rewards in a given environment, so top-down control (where value representations are) should dominate over bottom-up input (sensory information). On the other hand, if obtained rewards present a large amount of variation, the balance should switch in order to prioritize bottom-up input increasing learning about new contingencies [@4BJ2B6KB#Yu_Dayan_2005; @P2FYNJKR#Soltani_Izquierdo_2019].
+The notion, previously presented, that an animals should behave differently when
+the outcome is within expected values or has changed drastically, is formalized
+in the models of expected and unexpected uncertainty [@4BJ2B6KB#Yu_Dayan_2005].
+The model proposes expected uncertainty as the uncertainty regarding outcomes
+when contingencies (outcome given a particular action) remain stable but is
+subject to some noise. On the other hand, unexpected uncertainty represents a
+drastic change in the contingencies likely due to a structural change in the
+environment. More precisely, the expected/unexpected uncertainty model proposes
+that if the obtained rewards present some variation it should not modify learned
+contingencies that map actions with rewards in a given environment, so top-down
+control (where value representations are) should dominate over bottom-up input
+(sensory information). On the other hand, if obtained rewards present a large
+amount of variation, the balance should switch in order to prioritize bottom-up
+input increasing learning about new contingencies [@4BJ2B6KB#Yu_Dayan_2005;
+@P2FYNJKR#Soltani_Izquierdo_2019].
 
-An interesting observation is that even when tasks have no abrupt change in the reward contingencies, animals behave as if the task was non-stationary  [@UJSWSGH3#Wu_Iyer_Wang_2018], that is, as if the contingencies do indeed presented abrupt changes, increasing exploratory behavior [@77AMCAE4#Ryali_Reddy_Yu_2016]. While the functional reasons behind this behavior is not clear, it has been proposed that they emerge because sustaining the belief that environments are non-stationary does not prove to be
-problematic in stationary ones [@77AMCAE4#Ryali_Reddy_Yu_2016] or because
-stochasticity in decisions may provide a sufficient heuristic in many natural environments [@ERS4UNTK#Reverdy_Srivastava_Leonard_2014] which are effectively non-stationary. This points that animals do not only use uncertainty to properly guide its behavior, but assume that all environments are uncertain.
+As mentioned previously, animals should whether changes in the outcome are
+expected or unexpected. If the action-outcome contingencies never present abrupt
+changes the environment is described as stationary, whereas if from time to time
+contingencies change or the mean value goes up or down, then the environment is
+defined as non-stationary [@VPX6THEN#Raj_Kalyani_2017]. Animals, tend to behave
+as if the environment was non-stationary [@UJSWSGH3#Wu_Iyer_Wang_2018], and they
+couple this with an increase in exploratory behavior
+[@77AMCAE4#Ryali_Reddy_Yu_2016], as predicted by the expected/unexpected model
+[@4BJ2B6KB#Yu_Dayan_2005; @T3QJH2AJ#Cohen_Mcclure_Yu_2007]. While the functional
+reasons behind this behavior are not clear, it has been proposed that acting as
+if the environment was non-stationary simply does not prove to be problematic in
+stationary ones [@77AMCAE4#Ryali_Reddy_Yu_2016], and can be used as an heuristic
+in natural environments [@ERS4UNTK#Reverdy_Srivastava_Leonard_2014]. That is,
+assuming a non-stationary environment and consequently increasing exploratory
+behavior, might prove to be useful in most cases and does not prove to be
+detrimental when the environment is stationary.
 
-Under non-stationary environments, contingencies change, so animals are faced
-with the dilemma of either exploiting or exploring [@2BEHEM7X#Sutton_Barto_2018]. Exploiting means that behavior should be consistent with previously learned reward contingencies, choosing the option with the highest expected value. On the other hand, exploration tries to re-sample the environment to improve or re-learn current contingencies. The exploitation-exploration balance has been linked to the
-expected and unexpected uncertainty [@T3QJH2AJ#Cohen_Mcclure_Yu_2007], as unexpected uncertainty should increase exploratory behavior to boost learning of new contingencies, whereas if only expected uncertainty is present, behavior should exploit current knowledge. However, exploration could also be triggered by 'boredom' when environment properties are extensible learned [@LEWESIS6#AstonJones_Cohen_2005].
+While exploring the environment can be useful, exploring too much can be
+detrimental to actually obtaining food, so exploiting current knowledge about
+food location is also necesary. This makes animals face the
+exploration-exploitation dillema [@2BEHEM7X#Sutton_Barto_2018]. Exploiting means
+that behavior should be consistent with previously learned reward contingencies,
+choosing the option with the highest expected value. On the other hand,
+exploration implies re-sampling the environment to improve or re-learn current
+contingencies. Uncertainty is a key variable to the resolution of this dillema.
+Unexpected uncertainty increases the exploratory behavior, boosting learning of
+new contingencies, whereas expected uncertainty bias towards explotation
+[@T3QJH2AJ#Cohen_Mcclure_Yu_2007; @LEWESIS6#AstonJones_Cohen_2005].
 
-Here we discussed that an animal senses the uncertainty in its food environment, and this information regulates food-seeking behavior. That animals act as if the food environment is uncertain and non-stationary even if this is not the case, further supports the idea of a deeply rooted strategy to deal with uncertain environments. One of the key assumptions behind this idea is that sensing uncertainty is useful because the perceptual abilities of an animal are limited. Yet, there is the position that perceptual abilities of animals are sufficient to inform food seeking strategies and that perception of environmental uncertainty is unnecessary to adapt food-seeking behavior. Next, we will argue in favor that perceptual abilities are not sufficient to adapt food-seeking behavior and that perception of uncertainty is necessary.
+Here we discussed how sensing uncertainty in the food environment regulates
+food-seeking behavior. Animals act as if the food environments are uncertain and
+non-stationary even if this is not the case, supporting the idea of a deeply
+rooted strategy to deal with uncertain environments. One of the key assumptions
+behind this idea is that sensing uncertainty is useful because the perceptual
+abilities of an animal are limited. We argue against the idea of perceptual
+abilities being dominant over the simple search strategies presented
+[@92KDU3TH#LascalaGruenewald_Etal_2019], because sensory perception is always
+limited in some aspect inroducing uncertainty [@9XCDNBAM#Bartumeus_Etal_2016].
 
-Animals use perceptual information to track for food, informing where to go next. However, perceptual information is alway limited in some regard, establishing a perceptual range where food location information can be obtained with enough quality to inform food-seeking strategies
-[@C377F7EP#Fletcher_Etal_2013]. If an animal must know what is beyond such
-perceptual range, displacement is needed. However, to inform such displacement
-memory, perceptual information integration or other cognitive processes should come into play, because displacement from the perceptual range necessarily stops the animals from sensing the previous perceptual range. In many classical models, animals are assumed to somehow integrate information about
-resource quality and distribution into an environmental mean that is kept on memory
-[@ESYGCSLH#Charnov_1976]. However, even if this was possible, integration of environmental information is dependent on time, as the environment changes information must be constantly updated. So integrating information over time, such as how food availability changes, can prove to be helpful for the foraging animal [@LDCMV4VS#Fagan_Etal_2017], because it includes information about the temporal dimension.
+ALl sensory organs have a receptive field, which defines a range where
+information can orient food-seeking behavior [@C377F7EP#Fletcher_Etal_2013]. If
+an animal must know what is beyond such range, displacement is needed. However,
+to inform such displacement, memory, perceptual information integration or other
+cognitive process should come into play [@NF2J3H5H#Ranc_Etal_2021], because by
+definition such palce lies beyond the receptive field. However, what is
+remembered about a certain location loses validity over time. Given that the
+environment is in constant change, integrating information of how food
+availability changes over can prove to be useful for the foraging animal
+[@LDCMV4VS#Fagan_Etal_2017].
 
-Integrating information of location and availability over time can inform food-seeking behavior. However, obtaining good quality information requires the animal to explore its environment, which at the same time can modify the quality of information obtained. The speed-perception tradeoff describes how perceptual abilities are degraded as speed is increased
-[@KU6TMHRT#Campos_Bartumeus_Méndez_2013], rapid approaching speeds are
-required to capture prey or obtain food resources, otherwise food location can change or be consumed by another animal, rendering the information useless; however, moving fast prevents animals to make an exhaustive exploration of its environment [@LDCMV4VS#Fagan_Etal_2017]. On the other hand, the intensive-extensive tradeoff points how finding food-resources nearby impairs finding resources far-away, if the animal is performing and exhaustive search in the nearby area, information about areas far away is more difficult to obtain [@VYE5NZFU#Raposo_Etal_2011; @9XCDNBAM#Bartumeus_Etal_2016 ]. Both tradeoffs imply that in order to obtain knowledge about food location and
-actually achieving success in obtaining it, leads to an inevitable perceptual uncertainty; moving fast makes information about food location harder to obtain, but at the same time moving fast is necessary to actually obtain food. Additionally, appropriately exploring the environment forces the animal to focus on one area and to grow increasingly uncertain of other areas' food resources. Together, these tradeoffs illustrate how even when perceptual abilities can inform food location, there is an inescapable uncertainty that animals are required to deal with.
+Integrating information of location and availability over time can inform
+food-seeking behavior. However, obtaining good quality information requires the
+animal to explore its environment, which at the same time can modify the quality
+of information obtained. The speed-perception tradeoff describes how perceptual
+abilities are degraded as speed is increased
+[@KU6TMHRT#Campos_Bartumeus_Méndez_2013], rapid approaching speeds are required
+to capture prey or obtain food resources, otherwise food location can change or
+be consumed by another animal, rendering the information useless; however,
+moving fast prevents animals to make an exhaustive exploration of its
+environment [@LDCMV4VS#Fagan_Etal_2017]. On the other hand, the
+intensive-extensive tradeoff points how finding food-resources nearby impairs
+finding resources far-away, if the animal is performing and exhaustive search in
+the nearby area, information about areas far away is more difficult to obtain
+[@VYE5NZFU#Raposo_Etal_2011; @9XCDNBAM#Bartumeus_Etal_2016 ]. Both tradeoffs
+imply that in order to obtain knowledge about food location and actually
+achieving success in obtaining it, leads to an inevitable perceptual
+uncertainty; moving fast makes information about food location harder to obtain,
+but at the same time moving fast is necessary to actually obtain food.
+Additionally, appropriately exploring the environment forces the animal to focus
+on one area and to grow increasingly uncertain of other areas' food resources.
+Together, these tradeoffs illustrate how even when perceptual abilities can
+inform food location, there is an inescapable uncertainty that animals are
+required to deal with.
 
-In order to deal with the inescapable uncertainty, animals establish two distinct behavioral
-modes: (a) local search and (b) relocation. Local search consists of small displacements and is predominantly informed by perceptual information, while relocation behavior implies traveling larger distances, using Lévy-like patterns [@W7DBK8JN#Bazazi_Etal_2012]. While there has been discussion of Brownian-like random movements guiding local search, this is most likely an emergent property caused by frequent food encounters [@HJIF9SNA#DeJager_Etal_2014], so the shifts from a random relocation process to a perceptually guided local search, are in part result of an increase in food encounters. Thus, the overall food-seeking strategy derives from a combination of random movements, that allows to optimally sample the environment, and perceptually informed ones when food sources are near [@KCAKLD2E#Balogh_Etal_2020].
-
-Given the limitation in perceptual abilities, uncertainty seems to be inescapable. Even when an experienced animal can remember optimal foraging paths, random searches with distinct cycles of exploration/exploitation phases persist [@GNGBMVLA#Kembro_Etal_2019]. The reason why animals still explore, even when having knowledge of food location, might be that introducing stochasticity in food-seeking behavior improves success as it makes strategies more resilient to cognitive errors derived from perception [@YTHQBTQH#Campos_Etal_2020]. The persistence of strategies that permits the balance between exploitation, exploration [@KU6TMHRT#Campos_Bartumeus_Méndez_2013], even when they are not technically needed [@77AMCAE4#Ryali_Reddy_Yu_2016] shows how relevant uncertainty is food-seeking behavior. In this section, we presented how stochastic properties of the environment lead to behavioral adaptations to deal with the resultant uncertainty, by favoring strategies that aim to reduce uncertainty [@QAN6C9AM#Peters_Mcewen_Friston_2017]. In the following section, we will examine models that consider the case of foraging in uncertain environments to inform about the underlying processes in food-seeking behavior.
+Given the limitation in perceptual abilities, uncertainty seems to be
+inescapable. Even when an experienced animal can remember optimal foraging
+paths, random searches with distinct cycles of exploration/exploitation phases
+persist [@GNGBMVLA#Kembro_Etal_2019]. The reason why animals still explore, even
+when having knowledge of food location, might be that introducing stochasticity
+in food-seeking behavior improves success as it makes strategies more resilient
+to cognitive errors derived from perception [@YTHQBTQH#Campos_Etal_2020]. The
+persistence of strategies that permits the balance between exploitation,
+exploration [@KU6TMHRT#Campos_Bartumeus_Méndez_2013], even when they are not
+technically needed [@77AMCAE4#Ryali_Reddy_Yu_2016] shows how relevant
+uncertainty is food-seeking behavior. In this section we presented the relevance
+of uncertainty if food-seeking behavior, and how inescapable it is, because even
+when sensory perception can help reduce it at a local scale, in re-introduces
+uncertainty on further away locations. In the following section, we will examine
+models that consider the case of foraging in uncertain environments to inform
+about the underlying processes in food-seeking behavior.
 
 ## Foraging models and underlying processes in food-seekings behavior
 
-A model that presents how animals include uncertainty into food-seeking behavior should include the following considerations: first, the rules determining the result of the interaction
-between animal and environment are assumed to be unknown or only partially known due to the stochastic nature of the environment. Secondly, the animal may take any action $a$ within a set of possible actions $a \in A$ for a particular state of the environment $s$. Any action $a$ causes an stochastic transition from a state $s$ to another state $s'$. As such, the result of an interaction
-between animal and environment can be described by its value $q$, which is a function of both action and current environment state $q(s, a)$. Such model of action, state, and value corresponds to a Markov decision process [@2BEHEM7X#Sutton_Barto_2018] that captures the intuition of the decision making process where the animal can take action in the environment, but the action outcome is partly random and dependent on the current state. In this model, all environment dynamics are described by the probabilities $p(s', r | s, a)$, where $r$ is the obtained reward (interaction outcome), and such probabilities are defined for every pair of $a$ and $s$. A Markov decision process that includes the perceptual uncertainty, which we deemed inherent to food-seeking behavior, can be included by considering that states $s$ are paired with observations $o$ made by the animal to infer state $s$, because the state cannot be directly observed or there is some sensory noise. Including perceptual uncertainty makes the animal to consider environment states as the conditional probability of any particular observation given a state $p(o | s)$, generating a belief of the current state based on perceptual information
+A model that presents how animals include uncertainty into food-seeking behavior
+should include the following considerations: first, the rules determining the
+result of the interaction between animal and environment are assumed to be
+unknown or only partially known due to the stochastic nature of the environment.
+Secondly, the animal may take any action $a$ within a set of possible actions $a
+\in A$ for a particular state of the environment $s$. Any action $a$ causes an
+stochastic transition from a state $s$ to another state $s'$. As such, the
+result of an interaction between animal and environment can be described by its
+value $q$, which is a function of both action and current environment state
+$q(s, a)$ (Fig. 1). Such model of action, state, and value corresponds to a Markov
+decision process [@2BEHEM7X#Sutton_Barto_2018] that captures the intuition of
+the decision making process where the animal can take action in the environment,
+but the action outcome is partly random and dependent on the current state. In
+this model, all environment dynamics are described by the probabilities $p(s', r
+| s, a)$, where $r$ is the obtained reward (interaction outcome), and such
+probabilities are defined for every pair of $a$ and $s$. A Markov decision
+process that includes the perceptual uncertainty, which we deemed inherent to
+food-seeking behavior, can be included by considering that states $s$ are paired
+with observations $o$ made by the animal to infer state $s$, because the state
+cannot be directly observed or there is some sensory noise. Including perceptual
+uncertainty makes the animal to consider environment states as the conditional
+probability of any particular observation given a state $p(o | s)$, generating a
+belief of the current state based on perceptual information
 [@W73P5HZ9#Ma_Jazayeri_2014].
 
-To model how an animal represents the value of a given option $q(s, a)$ in an uncertain environment, the value of the option becomes a distribution over possible values that is updated every time an action $a$ is performed. For the simple case where rewards are obtained or not (without any difference in reward magnitude), $q(s, a)$ has a Bernoulli distribution $p(X = reward) = a$ and $(p(X = no reward) = 1 - a)$. Then, these probabilities can be modeled with the Beta distribution, which takes parameters $\alpha$ and $\beta$. With $\alpha = 1, \beta = 1$ the Beta distributions produce a uniform distribution over $[0, 1]$ successfully representing the uninformed prior probability for the rewards, representing total uncertainty about option value. To generate the posterior probability, every time an action results in a reward, the parameter $\alpha$ increases by 1, biasing the distribution towards 1. On the other hand, if no reward is obtained, the parameter $\beta$ increases by 1, biasing the distribution towards 0.
+To model how an animal represents the value of a given option $q$ in an
+uncertain environment, the value of the option becomes a distribution over
+possible values that is updated every time an action $a$ is performed. For the
+simple case where rewards are obtained or not (without any difference in reward
+magnitude), $q(s, a)$ has a Bernoulli distribution $p(X = reward) = a$ and $(p(X
+= no reward) = 1 - a)$. Then, these probabilities can be modeled with the Beta
+distribution, which takes parameters $\alpha$ and $\beta$. With $\alpha = 1,
+\beta = 1$ the Beta distributions produce a uniform distribution over $[0, 1]$
+successfully representing the uninformed prior probability for the rewards,
+representing total uncertainty about option value. To generate the posterior
+probability, every time an action results in a reward, the parameter $\alpha$
+increases by 1, biasing the distribution towards 1. On the other hand, if no
+reward is obtained, the parameter $\beta$ increases by 1, biasing the
+distribution towards 0.
 
 Finally, the mean is defined as
 
@@ -115,13 +321,54 @@ and its variance by
 
 $$\frac{\alpha\beta}{(\alpha + \beta)^2(\alpha + \beta + 1)}$$
 
-With these simple statistical properties of the Beta distribution, we can represent uncertainty over the expected rewards for any given $a$ and $s$. If the exploration is defined by the posterior distribution, then it can be considered a Thompson sampling strategy [@ZZ9I6KCZ#Thompson_1933]. To select an action, a posterior is built for every action and updated according to the previously stated rules. Then, for each posterior, a single reward estimate $\hat{r}$ is sampled, resulting in an estimated value for each action. The action selected greedily, so $a = argmax_{a \in A} \hat{r}(a)$ where $A$ is the set of possible actions within an environment [@WFYYPZ3N#Wang_Zhou_2020]. With this simple algorithm for action selection, the exploration and exploitation of different actions is balanced, actions with high associated value and certainty will likely draw high values in the sampling procedure, actions with low expected value and high certainty will draw low values, and actions with high uncertainty can draw lower or higher values. Because the process must be performed for every state, tractability is limited by the number of states. In general terms, a solution for this is to consider the reward vector as a weighted average over past rewards, with a step-size parameter
-$((0,1])$. The lower the value of this parameter the more weight is given to recent rewards, on the other hand, if it's closer to 1, then all the reward history is equally considered. More complex alternatives to this problem include modeling non-stationarity as Poisson arrival process that modifies the means rewards [@2S4JPDRG#Ghatak_2020], bayesian approaches to modulate past observed rewards [@VPX6THEN#Raj_Kalyani_2017], and explicitly modeling environment volatility in a bayesian setup [@BHR2NAEI#Behrens_Etal_2007].
+With these simple statistical properties of the Beta distribution, we can
+represent uncertainty over the expected rewards for any given $a$ and $s$.  The
+previously presented way to model environment uncertainty and $q$ is the general
+case of Thompson sampling [@ZZ9I6KCZ#Thompson_1933]. To select an action, a
+posterior is built for every action and updated according to the previously
+stated rules (Fig. 2). Then, for each posterior, a single reward estimate $\hat{r}$ is
+sampled, resulting in an estimated value for each action. The action selected
+greedily, so $a = argmax_{a \in A} \hat{r}(a)$ where $A$ is the set of possible
+actions within an environment [@WFYYPZ3N#Wang_Zhou_2020]. With this simple
+algorithm for action selection, the exploration and exploitation of different
+actions is balanced, actions with high associated value and certainty will
+likely draw high values in the sampling procedure, actions with low expected
+value and high certainty will draw low values, and actions with high uncertainty
+can draw lower or higher values. Because the process must be performed for every
+state, tractability is limited by the number of states. In general terms, a
+solution for this is to consider the reward vector as a weighted average over
+past rewards, with a step-size parameter $((0,1])$. The lower the value of this
+parameter the more weight is given to recent rewards, on the other hand, if it's
+closer to 1, then all the reward history is equally considered. More complex
+alternatives to this problem include modeling non-stationarity as Poisson
+arrival process that modifies the means rewards [@2S4JPDRG#Ghatak_2020],
+bayesian approaches to modulate past observed rewards
+[@VPX6THEN#Raj_Kalyani_2017], and explicitly modeling environment volatility in
+a bayesian setup [@BHR2NAEI#Behrens_Etal_2007].
 
-While this general model can work in non-stationary environments, it doesn't explicitly considers the belief of the current state based on the perceptual information received $p(o | s)$. To include this, a probability for every $o \in O$ by state is necessary, where $O$ is the set of all particular observations $o$. To model state beliefs, the goal is to obtain the function that maps observations $o$ to action $a$, given an underlying model that relates states with observations. A hidden Markov model (HMM) represents this. HMM generates conditional probability distributions $p(o | s)$. Bayesian, among other methods for obtaining such model given only actions and observations has been proposed [@B9YLCVG6#Funamizu_Etal_2012;
-@XBHNGIHT#Yoon_Lee_Hovakimyan_2018; @TBQJ5HNA#Piray_Daw_2020], that allows us to explicitly model how an animal infers the current state given perceptual information.
+While this general model can work in non-stationary environments, it doesn't
+explicitly considers the belief of the current state based on the perceptual
+information received $p(o | s)$. To include this, a probability for every $o \in
+O$ by state is necessary, where $O$ is the set of all particular observations
+$o$. To model state beliefs, the goal is to obtain the function that maps
+observations $o$ to action $a$, given an underlying model that relates states
+with observations. A hidden Markov model (HMM) represents this. HMM generates
+conditional probability distributions $p(o | s)$. This allows us to explicitly
+model how an animal infers the current state given perceptual information
+[@B9YLCVG6#Funamizu_Etal_2012; @XBHNGIHT#Yoon_Lee_Hovakimyan_2018;
+@TBQJ5HNA#Piray_Daw_2020].
 
-In this section, we offered the elementary considerations for a model of food-seeking behavior in non-stationary environments, with uncertainty over action outcomes due to perceptual limitations. Thompson sampling was considered as the base for this due to its simplicity and elegance in balancing exploration/exploitation and including uncertainty in the decision process. The goal here was not to establish or to specify a complete model, but to provide a more formal framework to relate uncertainty with the exploration/exploitation dilemma and perceptual limitations discussed in the previous sections. In the next section we provide evidence on how uncertainty is computed following the framework presented above and introduce the reward prediction error as a simple process that could allow animals to compute uncertainty.
+In this section, we offered the elementary considerations for a model of
+food-seeking behavior in non-stationary environments, with uncertainty over
+action outcomes due to perceptual limitations. Thompson sampling was considered
+as the base for this due to its simplicity and elegance in balancing
+exploration/exploitation and including uncertainty in the decision process. The
+goal here was not to establish or to specify a complete model, but to provide a
+more formal framework to relate uncertainty with the exploration/exploitation
+dilemma and perceptual limitations discussed in the previous sections. In the
+next section we provide evidence on how uncertainty is computed following the
+framework presented above and introduce the reward prediction error as a simple
+process that could allow animals to compute uncertainty.
 
 ## Computing uncertainty
 
@@ -157,14 +404,67 @@ In this section, we presented simple models showing how uncertainty can be compu
 
 ## An adaptive strategy in modern times
 
-Food-seeking behavior adapted to environments with limited food. When food is limited animals approach cues with the highest associative strength to actual food [@B8QZIGEN#Montague_Dayan_Sejnowski_1996]. Reward prediction error then signals whether the current state is better or worse than expected, and animals should move or stay where the highest expected value is [@8Q6QHXGB#Kacelnik_Bateson_1996]. However, uncertainty in food delivery increases lever pressing and reduces the time latency for approaching the lever [@S8CHV5KG#Anselme_Robinson_Berridge_2013], which in fact means the opposite of preferring cues with highest associative strength food. Intermittent access to high-fat diets generates binge-eating behavior corresponding to drastic increase in food-seeking behavior [@QN55S25U#Hess_Etal_2019; @CTAFJAZ3#King_Etal_2016;
-@MBZJPLN3#Lardeux_Kim_Nicola_2013], increases reinforcement value upon withdrawal
-[@BDVQLHQZ#Mcgee_Etal_2010] and operant behavior without withdrawal [@8KGR8TT6#Wojnicki_Babbs_Corwin_2013; @DQHTA2QH#Wojnicki_Stine_Corwin_2007;
-@WPLVSADN#Wojnicki_Etal_2015] attenuating the effects of food devaluation, general psychomotor behavior increases [@GIDJCJMP#Hardaway_Etal_2016], and DA-Ach release also increases, augmenting motivated behavior towards food [@23K7IPBA#Rada_Avena_Hoebel_2005]. Mainly because of logistic reasons, intermittent access is provided at the same time of the day (in most cases), and that allows animals to predict the arrival of food, although with some inconsistencies within animals [@KUXWM8W5#Luby_Etal_2012]. However, the behavioral effects, except anticipatory behavior, are common disregarding if intermittent access is provided at completely random time or given at fixed times of the day [@VY8ZEZB6#MuñozEscobar_GuerreroVargas_Escobar_2019]. Taken together, this data suggests that food-seeking behavior increases in response to uncertainty in action-outcome association, and food availability.
+Food-seeking behavior adapted to environments with limited food. When food is
+limited animals approach cues with the highest associative strength to actual
+food [@B8QZIGEN#Montague_Dayan_Sejnowski_1996]. If a lever was associated with
+food delivery, but now food is being delivered randomly 50% of the time upon
+lever pressing, then the reward prediction would increase until the expectation
+is re-adjusted, and the animal should lower the its rate of lever pressing
+compared to when the lever always delivered food
+[@8Q6QHXGB#Kacelnik_Bateson_1996]. However, uncertainty in food delivery
+increases lever pressing and reduces the time latency for approaching the lever
+[@S8CHV5KG#Anselme_Robinson_Berridge_2013], which in fact means the opposite of
+preferring cues with highest associative strength food.
 
-Food-seeking behavior is increased to avoid starvation when a food shortage is predicted, and as previously noted, this derives in increased exploration, number foraging bouts, and time expended in foraging [@G83L8BXA#Harris_Chapman_Monfort_2010]. Food insecurity is defined as the perception of how secure or certain food access is going to be in the future [@WZS8BTVL#Dhurandhar_2016], and positively correlates with greater energetic intake [@WZS8BTVL#Dhurandhar_2016] and preference for high-fat alternatives [@EER2TNCJ#Nettle_Andrews_Bateson_2017], which are mainly cheap access foods in developed countries where this effect is more pronounced [@4LJKTR3N#Moradi_Etal_2019; @2N6SBNMK#Dinour_Bergen_Yeh_2007; @VDHUFYYV#Nettle_Bateson_2019]. The effect of food insecurity on increased intake are probably due to overeating fats and carbohydrates (cheap access and calorically dense foods) in periods of high food availability, leading to overweight [@2ZRH7IWR#Stinson_Etal_2018]. In modern urban environments, high-fat food is of easy access; this, coupled with a food-seeking behavior which seeks to maximize energetic gain when food shortage is predicted due to food-access uncertainty, can lead to overweight, because the mechanism is adapted to low resource environments and not calorically dense one. Thus, in developed countries, where caloric density is extremely high, increasing food-seeking behavior is likely to result in excessive caloric intake.
+Intermittent access to high-fat diets generates binge-eating behavior
+corresponding to drastic increases in food-seeking behavior
+[@QN55S25U#Hess_Etal_2019; @CTAFJAZ3#King_Etal_2016;
+@MBZJPLN3#Lardeux_Kim_Nicola_2013], increases reinforcement value upon
+withdrawal [@BDVQLHQZ#Mcgee_Etal_2010] and operant behavior without withdrawal
+[@8KGR8TT6#Wojnicki_Babbs_Corwin_2013; @DQHTA2QH#Wojnicki_Stine_Corwin_2007;
+@WPLVSADN#Wojnicki_Etal_2015] attenuating the effects of food devaluation,
+general psychomotor behavior increases [@GIDJCJMP#Hardaway_Etal_2016], and
+DA-Ach release also increases, augmenting motivated behavior towards food
+[@23K7IPBA#Rada_Avena_Hoebel_2005]. Mainly because of logistic reasons,
+intermittent access is provided at the same time of the day (in most cases), and
+that allows animals to predict the arrival of food, although with some
+inconsistencies within animals [@KUXWM8W5#Luby_Etal_2012]. However, the
+behavioral effects, except anticipatory behavior, are common disregarding if
+intermittent access is provided at completely random time or given at fixed
+times of the day [@VY8ZEZB6#MuñozEscobar_GuerreroVargas_Escobar_2019]. Taken
+together, this data suggests that food-seeking behavior increases in response to
+uncertainty in action-outcome association, and food availability.
 
- In this section we showed how action-outcome uncertainty, intermittent food access, and food insecurity show converging evidence on how food access uncertainty invigorates food-seeking behavior. However, coupled with an easy access to highly energetic foods, an adaptive behavior for preventing starvation, turns maladaptive resulting in overweight. In the following section, we present orexin as a potential mediator of uncertainty-driven foraging because of its pivotal role in both reactive and predictive homeostatic control [@52DV95LU#Burdakov_2020], and motivated behavior [@2X7SNKS3#Tyree_Borniger_DeLecea_2018].
+Food-seeking behavior is increased to avoid starvation when a food shortage is
+predicted, and as previously noted, this derives in increased exploration,
+number foraging bouts, and time expended in foraging
+[@G83L8BXA#Harris_Chapman_Monfort_2010]. Food insecurity is defined as the
+perception of how secure or certain food access is going to be in the future
+[@WZS8BTVL#Dhurandhar_2016], and positively correlates with greater energetic
+intake [@WZS8BTVL#Dhurandhar_2016] and preference for high-fat alternatives
+[@EER2TNCJ#Nettle_Andrews_Bateson_2017], which are mainly cheap access foods in
+developed countries where this effect is more pronounced
+[@4LJKTR3N#Moradi_Etal_2019; @2N6SBNMK#Dinour_Bergen_Yeh_2007;
+@VDHUFYYV#Nettle_Bateson_2019]. The effect of food insecurity on increased
+intake are probably due to overeating fats and carbohydrates (cheap access and
+calorically dense foods) in periods of high food availability, leading to
+overweight [@2ZRH7IWR#Stinson_Etal_2018]. In modern urban environments, high-fat
+food is of easy access; this, coupled with a food-seeking behavior which seeks
+to maximize energetic gain when food shortage is predicted due to food-access
+uncertainty, can lead to overweight, because the mechanism is adapted to low
+resource environments and not calorically dense one. Thus, in developed
+countries, where caloric density is extremely high, increasing food-seeking
+behavior is likely to result in excessive caloric intake.
+
+ In this section we showed how action-outcome uncertainty, intermittent food
+ access, and food insecurity show converging evidence on how food access
+ uncertainty invigorates food-seeking behavior. However, coupled with an easy
+ access to highly energetic foods, an adaptive behavior for preventing
+ starvation, turns maladaptive resulting in overweight. In the following
+ section, we present orexin as a potential mediator of uncertainty-driven
+ foraging because of its pivotal role in both reactive and predictive
+ homeostatic control [@52DV95LU#Burdakov_2020], and motivated behavior
+ [@2X7SNKS3#Tyree_Borniger_DeLecea_2018].
 
 ## Orexin as a potential mediator of uncertainty-drive foraging
 
@@ -197,33 +497,55 @@ In this section, we provided a plausible circuit where orexin activity acts as a
 
 ## General objective
 
-Determine how uncertainty in food-access increases food-seeking behavior, and how orexin mediates uncertainty-driven increased food-seeking behavior.
+Determine how uncertainty in food-access increases food-seeking behavior, and
+how orexin mediates uncertainty-driven increased food-seeking behavior.
 
 ## Specific objectives
 
-1. Determine whether increased uncertainty in food access increases motivation for palatable foods. We will model uncertainty by using an automated feeder to deliver food using fixed and variable schedules over 10 weeks. Next, we will use a progressive ratio test for sucrose as a measure of motivation for palatable food and whether uncertainty increases orexin expression and its ability to increase motivation for sucrose. Additionally, we will model an environment with both a certain and an uncertain alternative available at the same time over 2 weeks. For this we will use a lickometer with a spout randomly delivering a sucrose reward 50% of the time (uncertain spout) and a spout delivering it 100% of the time (certain reward). We will measure whether introducing an uncertain option increases the amount of licks and events, even when a certain option is present. 
+1. Determine whether increased uncertainty in substainance food access increases
+   motivation for palatable foods.
 
-2. Determine whether orexin promotes uncertainty-driven motivation for a sucrose solution. We will model uncertainty by presenting two alternatives one with uncertainty and the other with certainty about reward delivery. However, here choosing one option implies not choosing the other. Uncertainty-driven motivation will be considered as a change in the selection ratio between certain and uncertain alternatives in saline and orexin injected mice. We will also test the ratio change while blocking orexin function.
+2. Determine whether increased unceratinty in an obesogenic environment
+   increases motivation for palatable foods.
 
-3. Determine the differential gene expression in the hypothalamic area in uncertainty compared to certain conditions of specific objective 1. We will perform mRna sequencing on hypothalamic brain tissue of subjects in both conditions present in specific objective 1.
+3. Determine whether orexin promotes uncertainty-driven motivation for a sucrose
+   solution. We will model uncertainty by presenting two alternatives one with
+   uncertainty and the other with certainty about reward delivery. However, here
+   choosing one option implies not choosing the other. Uncertainty-driven
+   motivation will be considered as a change in the selection ratio between
+   certain and uncertain alternatives in saline and orexin injected mice. We
+   will also test the ratio change while blocking orexin function.
 
-4. Determine if orexin/dynorphin neurons projecting to the paraventricular nucleus and VTA are active during sucrose intake. We will inject a retrograde tracer into PVN and VTA and identify fos expressing projections after an operant task of sucrose acquisition.
+4. Determine the differential gene expression in the hypothalamic area in
+   uncertainty compared to certain conditions of specific objective 1. We will
+   perform real time quantitative PCR (RT qPCR) on hypothalamic brain tissue of
+   subjects in both conditions present in specific objective 1.
+
+5. Determine if orexin/dynorphin neurons projecting to the paraventricular
+   nucleus and VTA are active during sucrose intake. We will inject a retrograde
+   tracer into PVN and VTA and identify fos expressing projections after an
+   operant task of sucrose acquisition.
 
 # Hypothesis
 
 ## General hypothesis
 
-Food-access uncertainty increases food-seeking behavior, and this increase is modulated by orexin-neurons activity.
+Food-access uncertainty increases food-seeking behavior, and this increase is
+modulated by orexin-neurons activity.
 
 ## Specific hypothesis
 
-1. Food-access uncertainty, in normal and obesogenic environments, increases food-seeking behavior.
+1. Food-access uncertainty, in substainance food supply and in obesogenic
+   environments, increases food-seeking behavior.
 
-2. Prolonged exposure to food-access uncertainty environments increases prepro-orexin and orexin receptor expression in the hypothalamus.
+2. Prolonged exposure to food-access uncertainty environments increases
+   prepro-orexin and orexin receptor expression in the hypothalamus.
 
 3. Orexin, during hedonic intake, presents functional connectivity to the VTA.
 
-4. Orexin agonists increase the choice of uncertain options when presented with a certain and uncertain alternative, while orexin antagonists reduce the choice of uncertain options, relative to control.
+4. Orexin agonists increase the choice of uncertain options when presented with
+   a certain and uncertain alternative, while orexin antagonists reduce the
+   choice of uncertain options, relative to control.
 
 # Methods
 
@@ -249,7 +571,11 @@ The progressive ratio task consists of a cage with two spouts, one with water an
 
 ### Quantitative analysis of gene expression
 
-Mice will be euthanized with isoflurane. Brain will be removed and stored at -80 C until hypothalamus dissection. RNA will be isolated by using TRIzol (Invitrogen) according to the manufacturer's instructions. Primers for prepro-orexin, orexin 1 and orexin 2 receptors will be prepared for real-time quantitative PCR and mRNA quantification according to [@L2MVQGK9#Lazzarino_Etal_2019].
+Mice will be euthanized with isoflurane. Brain will be removed and stored at -80
+C until hypothalamus dissection. RNA will be isolated by using TRIzol
+(Invitrogen) according to the manufacturer's instructions. Primers for
+prepro-orexin, orexin 1 and orexin 2 receptors will be prepared for real-time
+quantitative PCR according to [@L2MVQGK9#Lazzarino_Etal_2019].
 
 ### Materials and instruments
 
@@ -339,4 +665,25 @@ Video recording will allow us to compute the area under the trajectory curve, wh
 
 \pagebreak
 
+# Figures
+
+![An animal in state $s$ upon choosing the blue option receives a food reward.
+In turn, choosing the blue option changes the state to $s'$ where choosing the
+same action does not deliver food. Here the value $q$ is dependent on both action $a$ (red or blue) and state ($s$ or $s'$)](/home/nicoluarte/phd_thesis/chapters/fig1.png)
+
+![Creation of posterior distributions for possible actions. (1) the animal has
+never choosen any option so it thinks that the lever has an equal probability of
+given food or not. (2-3) the animal then sample both options, the blue one
+delivers food so the belief distribution is slighty bias toward that option
+delivering food, whereas the red option shows the opposite. (4) the animal
+re-samples the red option, but now food is delivered increasing the spread of
+the belief distribution, representing uncertainty on whether the red option is
+expected to give food or not. (5) The blue option is sampled again and food is
+delivered, thus increasing the bias towards the blue option delivering food,
+leaving less uncertainty over this option.](/home/nicoluarte/phd_thesis/chapters/fig2.png)
+
+\pagebreak
+
 # References
+
+
