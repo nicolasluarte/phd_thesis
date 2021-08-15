@@ -77,7 +77,8 @@ df %>%
 	       isEvent = diff(c(0, eventsCum)),
 	       isReward = diff(c(0, rewardsCum)),
 	       eventsPerSpout = sum(isEvent),
-	       rewardsPerSpout = sum(isReward)
+	       rewardsPerSpout = sum(isReward),
+	       licksPerSpout = n()
 	       ) %>%
 	ungroup() %>%
 	group_by(date, raton) %>%
@@ -121,5 +122,17 @@ df %>%
 	isTimeoutThreshold = as.factor(isTimeoutThreshold),
 	raton = as.factor(raton),
 	) -> df
+
+# function to transform date to sessions
+date2s <- function(date.vec) {
+sort(date.vec) %>%
+	diff() %>%
+	{ if_else(. > 0, 1, 0) } %>%
+	cumsum() -> session
+session <- c(1,session + 1)
+return(session)
+}
+df <- df[order(df$date),]
+df$session <- date2s(df$date)
 
 df %>% saveRDS(., "data.rds")

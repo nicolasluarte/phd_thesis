@@ -16,7 +16,7 @@ header-includes:
 \pagestyle{plain}
 \renewcommand\maketitlehooka{\null\mbox{}\vfill}
 \renewcommand\maketitlehookd{\vfill\null}
-\title{Proyecto de tesis doctoral para optar al grado de Doctor en Neurociencia en la Pontificia Universidad Católica de Chile}
+\title{Proyecto de tesis doctoral para optar al grado de Doctor en Neurociencia en la Pontificia Universidad Católica de Chile: Orexin and uncertainty effects on food-seeking behavior}
 \author{Luis Nicolás Luarte Rodríguez - Claudio Peréz-Leighton}
 
 \begin{titlingpage}

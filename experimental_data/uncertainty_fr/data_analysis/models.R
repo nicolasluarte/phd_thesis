@@ -34,7 +34,36 @@ df %>%
 	ggplot(aes(session, sumLicks, color = expGroup)) +
 	geom_line()
 
+# Licks plot A
+df %>%
+	group_by(condition, expGroup, raton) %>%
+	summarise(
+		  mean.licks = mean(sumLicks)
+		  ) -> plot.a.licks
+plot.a.licks %>%
+	group_by(expGroup, condition) %>%
+	summarise(group.mean = mean(mean.licks), sem = sd(mean.licks) / sqrt(4)) -> group.licks
+levels(plot.a.licks$expGroup) <- c("Control", "Treatment")
+levels(group.licks$expGroup) <- c("Control", "Treatment")
+plot.a.licks %>%
+	ggplot(aes(condition, mean.licks)) +
+	geom_col(data = group.licks, aes(condition, group.mean, group = expGroup)) +
+	geom_errorbar(data = group.licks, aes(condition, group.mean, group = expGroup,
+					      ymin = group.mean - sem,
+					      ymax = group.mean + sem,
+					      width = 0.3)) +
+	geom_point(aes(condition, mean.licks, group = raton), color = "grey70") +
+	geom_line(aes(condition, mean.licks, group = raton), color = "grey70") +
+	facet_grid(~expGroup) +
+	theme_pubr() +
+	ylab("Number of licks") +
+	xlab("Experimental condition") +
+	theme(
+	      strip.background = element_blank(),
+	      strip.text.x = element_text(size = 10)
+	) -> plot.licks.a
 
+# Licks plot B
 df %>%
 	filter(
 	       date < "2021-06-04",
@@ -46,7 +75,7 @@ df %>%
 	mutate(
 	       baseline = map(
 			      data, ~mean(.x %>%
-			      filter(session <= 13, session >= 10) %>%
+			      filter(session <= 11, session >= 8) %>%
 			      select(sumLicks) %>%
 			      unlist()
 			      )
@@ -55,7 +84,342 @@ df %>%
 	unnest(c(data, baseline)) %>%
 	group_by(raton, session, expGroup, condition, sumLicks, baseline) %>%
 	nest() %>%
-	select(-c(data)) -> deltas
+	select(-c(data)) %>%
+	mutate(mat = if_else(
+	       condition == "post", 1, 0),
+	       week = if_else(session >= 13 & session <= 22, "Week 1", "Week 2"),
+		delta = sumLicks - (baseline * mat)
+	) -> deltas
+deltas %>%
+	filter(condition == "post") %>%
+	group_by(expGroup, week) %>%
+	summarise(
+		  mean.licks = mean(delta),
+		  sem = sd(delta) / sqrt(4)
+		  ) %>%
+	ggplot(aes(expGroup, mean.licks)) +
+	geom_col() +
+	geom_point() +
+	geom_hline(yintercept = 0, color = "grey70") +
+	geom_errorbar(aes(ymin = mean.licks - sem, ymax = mean.licks + sem,
+			  width = 0.3)) +
+	facet_wrap(~week) +
+	ylim(c(-3000, 3000)) +
+	theme_pubr() +
+	theme(
+	      strip.background = element_blank(),
+	      strip.text.x = element_text(size = 10)) +
+	ylab("Licks post condition - baseline licks") +
+	xlab("Experimental group")
+
+df %>%
+	filter(
+	       date < "2021-06-04",
+	       session != 12
+	       ) %>%
+	group_by(raton) %>%
+	nest() %>%
+	mutate(
+	       baseline = map(
+			      data, ~mean(.x %>%
+			      select(sumLicks) %>%
+			      unlist()
+			      )
+			      )
+	       ) %>%
+	unnest(c(data, baseline)) %>%
+	group_by(raton, session, expGroup, condition, sumLicks, baseline, randomSpout, spoutNumber, licksPerSpout) %>%
+	nest() %>%
+	select(-c(data)) %>%
+	mutate(mat = if_else(
+	       condition == "post", 1, 0),
+		delta = licksPerSpout - (baseline * mat)
+	) -> deltas
+deltas %>%
+	filter(condition == "post", expGroup == "treatment") %>%
+	group_by(randomSpout, spoutNumber) %>%
+	summarise(
+		  mean.licks = mean(delta),
+		  sem = sd(delta) / sqrt(n())
+		  ) 
+	ggplot(aes(randomSpout, mean.licks)) +
+	geom_col() +
+	geom_point() +
+	geom_hline(yintercept = 0, color = "grey70") +
+	geom_errorbar(aes(ymin = mean.licks - sem, ymax = mean.licks + sem,
+			  width = 0.3)) +
+	theme_pubr() +
+	facet_wrap(spoutNumber ~ randomSpout) +
+	theme(
+	      strip.background = element_blank(),
+	      strip.text.x = element_text(size = 10)) +
+	ylab("Licks post condition - baseline licks") +
+	xlab("Experimental group")
+
+df %>%
+	filter(
+	       date < "2021-06-04",
+	       session != 12
+	       ) %>%
+	group_by(raton) %>%
+	nest() %>%
+	mutate(
+	       baseline = map(
+			      data, ~mean(.x %>%
+			      select(eventsPerSpout) %>%
+			      unlist()
+			      )
+			      )
+	       ) %>%
+	unnest(c(data, baseline)) %>%
+	group_by(raton, session, expGroup, condition, sumEvents, eventsPerSpout, baseline, randomSpout, spoutNumber) %>%
+	nest() %>%
+	select(-c(data)) %>%
+	mutate(mat = if_else(
+	       condition == "post", 1, 0),
+		delta = eventsPerSpout - (baseline * mat)
+	) -> deltas.events
+deltas %>%
+	filter(condition == "post", expGroup == "treatment") %>%
+	group_by(randomSpout, spoutNumber) %>%
+	summarise(
+		  mean.events = mean(delta),
+		  sem = sd(delta) / sqrt(n())
+	 	  ) %>%
+	ggplot(aes(randomSpout, mean.events)) +
+	geom_col() +
+	geom_point() +
+	geom_hline(yintercept = 0, color = "grey70") +
+	geom_errorbar(aes(ymin = mean.events - sem, ymax = mean.events + sem,
+			  width = 0.3)) +
+	theme_pubr() +
+	facet_wrap(spoutNumber ~ randomSpout) +
+	theme(
+	      strip.background = element_blank(),
+	      strip.text.x = element_text(size = 10)) +
+	ylab("Licks post condition - baseline licks") +
+	xlab("Experimental group")
+
+deltas %>%
+	filter(condition == "post", expGroup == "treatment") %>%
+	rename(
+	       spout_position = spoutNumber,
+	       spout_type = randomSpout,
+	       group = expGroup,
+	       licks = licksPerSpout,
+	       licks_baseline = baseline,
+	       treatment = condition,
+	       delta_baseline = delta
+	       ) %>%
+	ungroup() %>%
+	select(
+	       group,
+	       delta_baseline,
+	       spout_type,
+	       spout_position
+	       ) -> data.frame.1
+	saveRDS(data.frame.1, "data_licks.rds")
+	write_csv(data.frame.1, "data_licks.csv")
+
+deltas.events %>%
+	filter(condition == "post", expGroup == "treatment") %>%
+	rename(
+	       spout_position = spoutNumber,
+	       spout_type = randomSpout,
+	       group = expGroup,
+	       events = eventsPerSpout,
+	       events_baseline = baseline,
+	       treatment = condition,
+	       delta_baseline = delta
+	       ) %>%
+	ungroup() %>%
+	select(
+	       group,
+	       delta_baseline,
+	       spout_type,
+	       spout_position
+	       ) -> data.frame.2
+	saveRDS(data.frame.2, "data_events.rds")
+	write_csv(data.frame.2, "data_events.csv")
+
+data.frame.1 %>%
+	group_by(spout_type, spout_position) %>%
+	summarise(
+		  mean.licks = mean(delta_baseline)
+		  ) %>%
+	ggplot(aes(spout_type, mean.licks)) +
+	geom_point() +
+	facet_wrap(spout_position ~ spout_type)
+
+data.frame.2 %>%
+	group_by(spout_type, spout_position) %>%
+	summarise(
+		  mean.licks = mean(delta_baseline)
+		  ) %>%
+	ggplot(aes(spout_type, mean.licks)) +
+	geom_point() +
+	facet_wrap(spout_position ~ spout_type)
+
+
+# Events plot A
+df %>%
+	group_by(condition, expGroup, raton) %>%
+	summarise(
+		  mean.events = mean(sumEvents)
+		  ) -> plot.a.events
+plot.a.events %>%
+	group_by(expGroup, condition) %>%
+	summarise(group.mean = mean(mean.events), sem = sd(mean.events) / sqrt(4)) -> group.events
+levels(plot.a.events$expGroup) <- c("Control", "Treatment")
+levels(group.events$expGroup) <- c("Control", "Treatment")
+plot.a.events %>%
+	ggplot(aes(condition, mean.events)) +
+	geom_col(data = group.events, aes(condition, group.mean, group = expGroup)) +
+	geom_errorbar(data = group.events, aes(condition, group.mean, group = expGroup,
+					      ymin = group.mean - sem,
+					      ymax = group.mean + sem,
+					      width = 0.3)) +
+	geom_point(aes(condition, mean.events, group = raton), color = "grey70") +
+	geom_line(aes(condition, mean.events, group = raton), color = "grey70") +
+	facet_grid(~expGroup) +
+	theme_pubr() +
+	ylab("Number of events") +
+	xlab("Experimental condition") +
+	theme(
+	      strip.background = element_blank(),
+	      strip.text.x = element_text(size = 10)
+	) -> plot.events.a
+
+# Events plot B
+df %>%
+	filter(
+	       date < "2021-06-04",
+	       date >= "2021-05-05",
+	       session != 12
+	       ) %>%
+	group_by(raton) %>%
+	nest() %>%
+	mutate(
+	       baseline = map(
+			      data, ~mean(.x %>%
+			      filter(session <= 11, session >= 8) %>%
+			      select(sumEvents) %>%
+			      unlist()
+			      )
+			      )
+	       ) %>%
+	unnest(c(data, baseline)) %>%
+	group_by(raton, session, expGroup, condition, sumEvents, baseline) %>%
+	nest() %>%
+	select(-c(data)) %>%
+	mutate(mat = if_else(
+	       condition == "post", 1, 0),
+	       week = if_else(session >= 13 & session <= 22, "Week 1", "Week 2"),
+		delta = sumEvents - (baseline * mat)
+	) -> deltas
+deltas %>%
+	filter(condition == "post") %>%
+	group_by(expGroup, week) %>%
+	summarise(
+		  mean.events = mean(delta),
+		  sem = sd(delta) / sqrt(n())
+		  ) %>%
+	ggplot(aes(expGroup, mean.events)) +
+	geom_col() +
+	geom_point() +
+	geom_hline(yintercept = 0, color = "grey70") +
+	geom_errorbar(aes(ymin = mean.events - sem, ymax = mean.events + sem,
+			  width = 0.3)) +
+	facet_wrap(~week) +
+	theme_pubr() +
+	theme(
+	      strip.background = element_blank(),
+	      strip.text.x = element_text(size = 10)) +
+	ylab("Events post condition - baseline events") +
+	xlab("Experimental group") -> plot.events.b
+
+grid.arrange(
+	     plot.events.a,
+	     plot.events.b,
+	     top = "A",
+	     bottom = "B"
+	     ) -> plot.events
+grid.arrange(
+	     plot.licks.a,
+	     plot.licks.b,
+	     top = "A",
+	     bottom = "B"
+	     ) -> plot.licks
+
+plot.events.b
+
+
+df %>%
+	filter(
+	       date < "2021-06-04",
+	       date >= "2021-05-05",
+	       session != 12,
+	       rewardedTrial == 1, 
+	       ) %>%
+	group_by(raton) %>%
+	nest() %>%
+	mutate(
+	       baseline = map(
+			      data, ~mean(.x %>%
+			      filter(session <= 11, session >= 9) %>%
+			      select(sumEvents) %>%
+			      unlist()
+			      )
+			      )
+	       ) %>%
+	unnest(c(data, baseline)) %>%
+	group_by(raton, session, expGroup, condition, sumEvents, baseline) %>%
+	nest() %>%
+	select(-c(data)) -> deltas1
+
+df %>%
+	filter(
+	       date < "2021-06-04",
+	       date >= "2021-05-05",
+	       session != 12,
+	       ) %>%
+	group_by(raton) %>%
+	nest() %>%
+	mutate(
+	       baseline = map(
+			      data, ~mean(.x %>%
+			      filter(session <= 11, session >= 9) %>%
+			      select(sumEvents) %>%
+			      unlist()
+			      )
+			      )
+	       ) %>%
+	unnest(c(data, baseline)) %>%
+	group_by(raton, session, expGroup, condition, sumEvents, baseline) %>%
+	nest() %>%
+	select(-c(data)) -> deltas2
+
+deltas2 %>%
+mutate(mat = if_else(
+		       condition == "post",
+		       1,
+		       0),
+       delta = sumEvents - (baseline * mat)
+) %>%
+group_by(raton, expGroup, condition, session) %>%
+summarise(delta_mean = unique(delta)) %>%
+group_by(expGroup, condition, session) %>%
+mutate(group_mean = mean(delta_mean), sem = sd(delta_mean) / sqrt(4)) %>%
+filter(condition == "post") %>%
+ggplot(aes(session, delta_mean, color = raton)) +
+geom_point(alpha = 0.3) +
+geom_line(alpha = 0.3) +
+geom_line(aes(session, group_mean), color = "black") +
+geom_errorbar(aes(ymin = group_mean - sem, ymax = group_mean + sem), color = "black") +
+geom_hline(yintercept = 0, color = "grey70") +
+facet_grid(~expGroup) +
+theme_pubr()
+ggsave("deltas.png")
 
 deltas %>%
 	mutate(mat = if_else(
@@ -65,6 +429,29 @@ deltas %>%
 	       delta = sumLicks - (baseline * mat)
 	) %>%
 	group_by(raton, expGroup, condition, session) %>%
+	filter(!raton %in% c(223, 233)) %>%
+	summarise(delta_mean = unique(delta)) %>%
+	group_by(expGroup, condition, session) %>%
+	mutate(group_mean = mean(delta_mean), sem = sd(delta_mean) / sqrt(4)) %>%
+	filter(condition == "post") %>%
+	ggplot(aes(session, delta_mean, color = raton)) +
+	geom_point(alpha = 0.3) +
+	geom_line(alpha = 0.3) +
+	geom_line(aes(session, group_mean), color = "black") +
+	geom_errorbar(aes(ymin = group_mean - sem, ymax = group_mean + sem), color = "black") +
+	geom_hline(yintercept = 0, color = "grey70") +
+	facet_grid(~expGroup) +
+	theme_pubr()
+
+deltas %>%
+	mutate(mat = if_else(
+			       condition == "post",
+			       1,
+			       0),
+	       delta = sumLicks - (baseline * mat)
+	) %>%
+	group_by(raton, expGroup, condition, session) %>%
+	filter(!raton %in% c(223, 233)) %>%
 	summarise(delta_mean = unique(delta)) %>%
 	group_by(expGroup, condition, session) %>%
 	mutate(group_mean = mean(delta_mean), sem = sd(delta_mean) / sqrt(4)) %>%
