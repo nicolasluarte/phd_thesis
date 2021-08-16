@@ -126,7 +126,7 @@ margin: auto;" }
 
 ## Reward and feeding centers connectivity permits procuring rewarding food to meet metabolic demands
 
-![](/home/nicoluarte/phd_thesis/presentation/fig17.png){ width=90% }
+![](/home/nicoluarte/phd_thesis/presentation/fig20.png){ width=80% }
 ^[@3MNS4ZFU#Rossi_Stuber_2018]
 
 ## Orexin could modulate exploration/exploitation through VTA DA activity
@@ -136,7 +136,7 @@ margin: auto;" }
 
 ## Orexin could modulate exploration/exploitation through VTA DA activity
 
-![](/home/nicoluarte/phd_thesis/presentation/fig19.png){ width=90% }
+![](/home/nicoluarte/phd_thesis/presentation/fig21.png){ width=90% }
 
 ## Orexin could modulate exploration/exploitation through VTA DA activity
 
@@ -144,22 +144,22 @@ margin: auto;" }
 
 ## Orexin could modulate exploration/exploitation through VTA DA activity
 
-![](/home/nicoluarte/phd_thesis/presentation/fig21.png){ width=90% }
+![](/home/nicoluarte/phd_thesis/presentation/fig22.png){ width=100% }
 ^[@TN6NBEH8#Beeler_Etal_2010]
 
 ## LHA orexin activity is specific to food-seeking behavior
 
-![](/home/nicoluarte/phd_thesis/presentation/fig22.png){ width=90% }
+![](/home/nicoluarte/phd_thesis/presentation/fig23.png){ width=75% }
 ^[@6FSWEX6Y#Akiyama_Etal_2004]
 
 ## LHA orexin activity is specific to food-seeking behavior
 
-![](/home/nicoluarte/phd_thesis/presentation/fig23.png){ width=90% }
+![](/home/nicoluarte/phd_thesis/presentation/fig24.png){ width=90% }
 ^[@7GXEINLY#González_Etal_2016]
 
 ## VTA DA tonic activity encodes entropy
 
-![](/home/nicoluarte/phd_thesis/presentation/fig24.png){ width=90% }
+![](/home/nicoluarte/phd_thesis/presentation/fig25.png){ width=75% }
 ^[@AR2TQB84#Fiorillo_2003]
 
 ## Key points
@@ -173,8 +173,100 @@ margin: auto;" }
 
 ## High calorie food items are of easy access
 
-![](/home/nicoluarte/phd_thesis/presentation/fig25.png){ width=90% }
+![](/home/nicoluarte/phd_thesis/presentation/fig27.png){ width=90% }
 ^[Verdugo, Giannina, Arias, Vanessa, & Perez Leighton Claudio. (2016)]
 
+## Uncertainty increases motivation to obtain food
 
-## References
+![](/home/nicoluarte/phd_thesis/presentation/fig28.png){ width=90% }
+^[@WPLVSADN#Wojnicki_Etal_2015]
+
+## Modern environments turn food-seeking behavior maladaptive
+
+![](/home/nicoluarte/phd_thesis/presentation/fig29.png){ width=90% }
+
+## General overview
+
+1. Uncertainty is inherent to food-seeking behavior
+2. Animals sense uncertainty through RPE, and modulate its behavior through the
+   learning rate
+3. Orexin modulates uncertainty-drive VTA-DA activity
+4. Easy-access to calorically dense foods turns food-seeking behavior
+   maladaptive
+
+# Methods
+
+## Main hypothesis and general objective
+
+- Objective: Determine how uncertainty in food-access increases food-seeking behavior, and how orexin mediates uncertainty-driven increased food-seeking behavior
+- Hypothesis: Food-access uncertainty increases food-seeking behavior, and this increase is modulated by orexin neurons activity
+
+## Specific objectives
+
+1. Determine whether uncertainty in food access required for subsistence increase motivation for palatable foods, and if this correlates with orexin gene expression
+2. Determine whether uncertainty in obesogenic environments increases food-seeking behavior and assess if increased food-seeking behavior correlated with orexin gene expression
+3. Determine if orexin/dynorphin neurons projecting to the VTA are active during sucrose intake
+4. Determine whether orexin in VTA elicits increased food-seeking behavior towards uncertain options, and orexin agonists inhibits food-seeking behavior towards uncertain options
+
+## Specific objective 1: setting
+
+![](/home/nicoluarte/phd_thesis/presentation/fig30.png){ width=100% }
+
+## Specific objective 1: behavioral analysis
+
+![](/home/nicoluarte/phd_thesis/presentation/fig31.png){ width=100% }
+
+## Specific objective 1: gene expression
+
+![](/home/nicoluarte/phd_thesis/presentation/fig32.png){ width=100% }
+
+## Specific objective 1: expected results
+
+![](/home/nicoluarte/phd_thesis/presentation/fig33.png){ width=100% }
+
+## Specific objective 2: setting
+
+![](/home/nicoluarte/phd_thesis/presentation/fig34.png){ width=100% }
+
+## Specific objective 2: behavioral analysis
+
+![](/home/nicoluarte/phd_thesis/presentation/fig31.png){ width=100% }
+
+## Specific objective 2: gene expression
+
+![](/home/nicoluarte/phd_thesis/presentation/fig32.png){ width=100% }
+
+## Specific objective 2: pilot study
+
+![](/home/nicoluarte/phd_thesis/presentation/fig35.png){ width=50% }
+^[@BMQQBZZD#Naneix_Peters_Mccutcheon_2020]
+
+## Specific objective 3: setting
+
+![](/home/nicoluarte/phd_thesis/presentation/fig36.png){ width=100% }
+
+## Specific objective 3: expected results
+
+![](/home/nicoluarte/phd_thesis/presentation/fig37.png){ width=85% }
+
+## Specific objective 4: setting
+
+![](/home/nicoluarte/phd_thesis/presentation/fig38.png){ width=100% }
+
+## Specific objective 4: behavioral analysis
+
+![](/home/nicoluarte/phd_thesis/presentation/fig39.png){ width=100% }
+
+## Specific objective 4: expected results
+
+![](/home/nicoluarte/phd_thesis/presentation/fig40.png){ width=100% }
+
+## Workplan
+
+![](/home/nicoluarte/phd_thesis/presentation/fig41.png){ width=100% }
+
+# Thanks!
+
+
+## References {.allowframebreaks}.
+
