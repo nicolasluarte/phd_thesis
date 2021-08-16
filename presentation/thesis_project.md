@@ -124,4 +124,57 @@ margin: auto;" }
 
 # Neural basis of uncertainty-driven food-seeking behavior
 
+## Reward and feeding centers connectivity permits procuring rewarding food to meet metabolic demands
+
+![](/home/nicoluarte/phd_thesis/presentation/fig17.png){ width=90% }
+^[@3MNS4ZFU#Rossi_Stuber_2018]
+
+## Orexin could modulate exploration/exploitation through VTA DA activity
+
+![](/home/nicoluarte/phd_thesis/presentation/fig18.png){ width=90% }
+^[@653JULL2#Inutsuka_Yamanaka_2013]
+
+## Orexin could modulate exploration/exploitation through VTA DA activity
+
+![](/home/nicoluarte/phd_thesis/presentation/fig19.png){ width=90% }
+
+## Orexin could modulate exploration/exploitation through VTA DA activity
+
+![](/home/nicoluarte/phd_thesis/presentation/fig20.png){ width=90% }
+
+## Orexin could modulate exploration/exploitation through VTA DA activity
+
+![](/home/nicoluarte/phd_thesis/presentation/fig21.png){ width=90% }
+^[@TN6NBEH8#Beeler_Etal_2010]
+
+## LHA orexin activity is specific to food-seeking behavior
+
+![](/home/nicoluarte/phd_thesis/presentation/fig22.png){ width=90% }
+^[@6FSWEX6Y#Akiyama_Etal_2004]
+
+## LHA orexin activity is specific to food-seeking behavior
+
+![](/home/nicoluarte/phd_thesis/presentation/fig23.png){ width=90% }
+^[@7GXEINLY#González_Etal_2016]
+
+## VTA DA tonic activity encodes entropy
+
+![](/home/nicoluarte/phd_thesis/presentation/fig24.png){ width=90% }
+^[@AR2TQB84#Fiorillo_2003]
+
+## Key points
+
+1. Orexin coordinates locomotor activity towards procuring food
+2. VTA DA tonic activity encodes entropy
+3. Orexin functional connectivity with VTA, allows modulation of
+   exploration/exploitation in food-seeking behavior
+
+# Food-seeking in modern obesogenic environments
+
+## High calorie food items are of easy access
+
+![](/home/nicoluarte/phd_thesis/presentation/fig25.png){ width=90% }
+^[Verdugo, Giannina, Arias, Vanessa, & Perez Leighton Claudio. (2016)]
+
+
 ## References
