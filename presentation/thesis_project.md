@@ -124,6 +124,16 @@ margin: auto;" }
 
 ![](/home/nicoluarte/phd_thesis/presentation/fig21.png){ width=90% }
 
+## LHA orexin activity role in food-seeking behavior
+
+![](/home/nicoluarte/phd_thesis/presentation/fig23.png){ width=50% }
+^[@6FSWEX6Y#Akiyama_Etal_2004]
+
+## LHA orexin activity role in food-seeking behavior
+
+![](/home/nicoluarte/phd_thesis/presentation/fig24.png){ width=90% }
+^[@7GXEINLY#González_Etal_2016]
+
 ## Orexin could modulate exploration/exploitation through VTA DA activity
 
 ![](/home/nicoluarte/phd_thesis/presentation/fig20.png){ width=80% }
@@ -134,15 +144,6 @@ margin: auto;" }
 ![](/home/nicoluarte/phd_thesis/presentation/fig22.png){ width=100% }
 ^[@TN6NBEH8#Beeler_Etal_2010]
 
-## LHA orexin activity is specific to food-seeking behavior
-
-![](/home/nicoluarte/phd_thesis/presentation/fig23.png){ width=50% }
-^[@6FSWEX6Y#Akiyama_Etal_2004]
-
-## LHA orexin activity is specific to food-seeking behavior
-
-![](/home/nicoluarte/phd_thesis/presentation/fig24.png){ width=90% }
-^[@7GXEINLY#González_Etal_2016]
 
 ## VTA DA tonic activity encodes entropy
 
@@ -185,7 +186,7 @@ margin: auto;" }
 4. Easy-access to calorically dense foods turns food-seeking behavior
    maladaptive
 
-# Methods
+# Hypothesis and objectives
 
 ## Main hypothesis and general objective
 
@@ -198,6 +199,8 @@ margin: auto;" }
 2. Determine whether uncertainty in obesogenic environments increases food-seeking behavior and assess if increased food-seeking behavior correlated with orexin gene expression
 3. Determine if orexin/dynorphin neurons projecting to the VTA are active during sucrose intake
 4. Determine whether orexin in VTA elicits increased food-seeking behavior towards uncertain options, and orexin agonists inhibits food-seeking behavior towards uncertain options
+
+# Methods
 
 ## Specific objective 1: setting
 
@@ -229,8 +232,7 @@ margin: auto;" }
 
 ## Specific objective 2: pilot study
 
-![](/home/nicoluarte/phd_thesis/presentation/fig35.png){ width=50% }
-^[@BMQQBZZD#Naneix_Peters_Mccutcheon_2020]
+![Pilot study](/home/nicoluarte/phd_thesis/presentation/fig35.png){.center}
 
 ## Specific objective 3: setting
 
@@ -258,6 +260,9 @@ margin: auto;" }
 
 # Thanks!
 
+# Inter removal intervals FED
 
-## References {.allowframebreaks}.
+![](/home/nicoluarte/phd_thesis/presentation/IRI.png){ width=100% }
+
+## References {.allowframebreaks}
 
