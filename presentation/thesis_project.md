@@ -53,21 +53,6 @@ margin: auto;" }
 ![](/home/nicoluarte/phd_thesis/presentation/fig7_trim.png){ width=65% }
 ^[@V2K7D7TC#Sims_Etal_2014; @GA2XPWXX#Raichlen_Etal_2014; @SMMK9V45#Wosniack_Etal_2017]
 
-## Dealing with uncertainty is inherent to food-seeking behavior
-
-![](/home/nicoluarte/phd_thesis/presentation/fig8.png){ width=85% }
-^[@FVM94VFH#Bartumeus_Etal_2014]
-
-## Dealing with uncertainty is inherent to food-seeking behavior
-
-![](/home/nicoluarte/phd_thesis/presentation/fig9.png){ width=85% }
-^[@FVM94VFH#Bartumeus_Etal_2014]
-
-## Dealing with uncertainty is inherent to food-seeking behavior
-
-![](/home/nicoluarte/phd_thesis/presentation/fig10.png){ width=85% }
-^[@FVM94VFH#Bartumeus_Etal_2014]
-
 ## Key points
 
 1. Due to limited perceptual ranges, animals must balance between exploration
@@ -88,6 +73,7 @@ margin: auto;" }
 ## Reward prediction error changes the learning rate, adapting behavior to environment uncertainty
 
 ![](/home/nicoluarte/phd_thesis/presentation/fig13.png){ width=90% }
+^[@4K9P45HP#Pearce_Hall_1980]
 
 ## Key points
 
@@ -126,10 +112,10 @@ margin: auto;" }
 
 ## Reward and feeding centers connectivity permits procuring rewarding food to meet metabolic demands
 
-![](/home/nicoluarte/phd_thesis/presentation/fig20.png){ width=80% }
+![](/home/nicoluarte/phd_thesis/presentation/fig19.png){ width=80% }
 ^[@3MNS4ZFU#Rossi_Stuber_2018]
 
-## Orexin could modulate exploration/exploitation through VTA DA activity
+## Reward and feeding centers connectivity permits procuring rewarding food to meet metabolic demands
 
 ![](/home/nicoluarte/phd_thesis/presentation/fig18.png){ width=90% }
 ^[@653JULL2#Inutsuka_Yamanaka_2013]
@@ -140,7 +126,8 @@ margin: auto;" }
 
 ## Orexin could modulate exploration/exploitation through VTA DA activity
 
-![](/home/nicoluarte/phd_thesis/presentation/fig20.png){ width=90% }
+![](/home/nicoluarte/phd_thesis/presentation/fig20.png){ width=80% }
+^[@XIJMRM6S#Baimel_Etal_2017]
 
 ## Orexin could modulate exploration/exploitation through VTA DA activity
 
@@ -149,7 +136,7 @@ margin: auto;" }
 
 ## LHA orexin activity is specific to food-seeking behavior
 
-![](/home/nicoluarte/phd_thesis/presentation/fig23.png){ width=75% }
+![](/home/nicoluarte/phd_thesis/presentation/fig23.png){ width=50% }
 ^[@6FSWEX6Y#Akiyama_Etal_2004]
 
 ## LHA orexin activity is specific to food-seeking behavior
@@ -159,8 +146,12 @@ margin: auto;" }
 
 ## VTA DA tonic activity encodes entropy
 
-![](/home/nicoluarte/phd_thesis/presentation/fig25.png){ width=75% }
+![](/home/nicoluarte/phd_thesis/presentation/fig25.png){ width=50% }
 ^[@AR2TQB84#Fiorillo_2003]
+
+## Proposed connectivity
+
+![](/home/nicoluarte/phd_thesis/presentation/fig26.png){ width=100% }
 
 ## Key points
 
