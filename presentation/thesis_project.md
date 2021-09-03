@@ -134,6 +134,10 @@ margin: auto;" }
 ![](/home/nicoluarte/phd_thesis/presentation/fig24.png){ width=90% }
 ^[@7GXEINLY#González_Etal_2016]
 
+## LHA orexin activity role in food-seeking behavior
+![](/home/nicoluarte/phd_thesis/presentation/orexin_vta.png){ width=60% }
+^[@Q8IHJK68#Mattar_Etal_2020]
+
 ## Orexin could modulate exploration/exploitation through VTA DA activity
 
 ![](/home/nicoluarte/phd_thesis/presentation/fig20.png){ width=80% }
@@ -210,6 +214,14 @@ margin: auto;" }
 
 ![](/home/nicoluarte/phd_thesis/presentation/fig31.png){ width=100% }
 
+## Inter removal intervals
+
+![](/home/nicoluarte/phd_thesis/presentation/IRI.png){ width=100% }
+
+## Circadian pellet intake
+
+![](/home/nicoluarte/phd_thesis/presentation/raster_example.png){ width=100% }
+
 ## Specific objective 1: gene expression
 
 ![](/home/nicoluarte/phd_thesis/presentation/fig32.png){ width=100% }
@@ -252,7 +264,11 @@ margin: auto;" }
 
 ## Specific objective 4: expected results
 
-![](/home/nicoluarte/phd_thesis/presentation/fig40.png){ width=100% }
+![](/home/nicoluarte/phd_thesis/presentation/model_ee.png){ width=120% }
+
+## Specific objective 4: expected results
+
+![](/home/nicoluarte/phd_thesis/presentation/orexin_ee.png){ width=120% }
 
 ## Workplan
 
@@ -260,9 +276,6 @@ margin: auto;" }
 
 # Thanks!
 
-# Inter removal intervals FED
-
-![](/home/nicoluarte/phd_thesis/presentation/IRI.png){ width=100% }
 
 ## References {.allowframebreaks}
 
