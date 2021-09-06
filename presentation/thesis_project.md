@@ -134,9 +134,11 @@ margin: auto;" }
 ![](/home/nicoluarte/phd_thesis/presentation/fig24.png){ width=90% }
 ^[@7GXEINLY#González_Etal_2016]
 
+
 ## LHA orexin activity role in food-seeking behavior
-![](/home/nicoluarte/phd_thesis/presentation/orexin_vta.png){ width=60% }
-^[@Q8IHJK68#Mattar_Etal_2020]
+
+![](/home/nicoluarte/phd_thesis/presentation/terril.png){ width=50% }
+^[@6CRBVAVT#Terrill_Etal_2016]
 
 ## Orexin could modulate exploration/exploitation through VTA DA activity
 
@@ -166,11 +168,6 @@ margin: auto;" }
    exploration/exploitation in food-seeking behavior
 
 # Food-seeking in modern obesogenic environments
-
-## High calorie food items are of easy access
-
-![](/home/nicoluarte/phd_thesis/presentation/fig27.png){ width=90% }
-^[Verdugo, Giannina, Arias, Vanessa, & Perez Leighton Claudio. (2016)]
 
 ## Uncertainty increases motivation to obtain food
 
@@ -210,17 +207,13 @@ margin: auto;" }
 
 ![](/home/nicoluarte/phd_thesis/presentation/fig30.png){ width=100% }
 
-## Specific objective 1: behavioral analysis
-
-![](/home/nicoluarte/phd_thesis/presentation/fig31.png){ width=100% }
-
 ## Inter removal intervals
 
 ![](/home/nicoluarte/phd_thesis/presentation/IRI.png){ width=100% }
 
-## Circadian pellet intake
+## Specific objective 1: behavioral analysis
 
-![](/home/nicoluarte/phd_thesis/presentation/raster_example.png){ width=100% }
+![](/home/nicoluarte/phd_thesis/presentation/fig31.png){ width=100% }
 
 ## Specific objective 1: gene expression
 
@@ -273,6 +266,43 @@ margin: auto;" }
 ## Workplan
 
 ![](/home/nicoluarte/phd_thesis/presentation/fig41.png){ width=100% }
+
+## Circadian pellet intake
+
+![](/home/nicoluarte/phd_thesis/presentation/raster_example.png){ width=100% }
+
+## Sucrose intake reward value decreases over time
+
+![](/home/nicoluarte/phd_thesis/presentation/licks_group.png){ width=100% }
+
+## LMM parameters
+
+![](/home/nicoluarte/phd_thesis/presentation/lmm_params.png){ width=100% }
+
+## LMM model results
+
+![](/home/nicoluarte/phd_thesis/presentation/lmm_model.png){ width=100% }
+
+## LMM model results
+
+![](/home/nicoluarte/phd_thesis/presentation/lmm_table.png){ width=100% }
+
+## Reinforcement learning main formulas
+
+![](/home/nicoluarte/phd_thesis/presentation/rl.png){ width=100% }
+
+## Reinforcement learning main formulas
+
+![](/home/nicoluarte/phd_thesis/presentation/rl_update.png){ width=100% }
+
+## Reinforcement learning main formulas
+
+![](/home/nicoluarte/phd_thesis/presentation/markov.png){ width=100% }
+
+## Orexin-A in VTA increases paltable food intake
+
+![](/home/nicoluarte/phd_thesis/presentation/orexin_vta.png){ width=60% }
+^[@Q8IHJK68#Mattar_Etal_2020]
 
 # Thanks!
 
